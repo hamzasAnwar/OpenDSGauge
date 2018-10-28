@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@color/reallyBlack"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <com.github.anastr.speedviewlib.ImageSpeedometer
+        android:id="@+id/speedView"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:sv_image="@drawable/speed"
+        app:sv_indicator="LineIndicator"
+        app:sv_indicatorColor="#a750bcff"
+        app:sv_speedTextColor="#fff"
+        app:sv_unitTextColor="#fff" />
+
+    <TextView
+        android:id="@+id/digitalSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="100dp"
+        android:textColor="#f5f5f5"/>
+</RelativeLayout>

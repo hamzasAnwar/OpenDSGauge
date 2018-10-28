@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Message>
+    <Event Name="Unsubscribe">/root/thisVehicle</Event>
+    <Event Name="Subscribe">/root/thisVehicle/physicalAttributes/Properties/speed</Event>
+    <Event Name="Subscribe">/root/thisVehicle/physicalAttributes/Properties/acceleration</Event>
+    <Event Name="SetUpdateInterval">10</Event>
+    <Event Name="EstablishConnection"/>
+</Message>

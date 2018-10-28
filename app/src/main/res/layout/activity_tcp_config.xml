@@ -21,14 +21,24 @@
             android:textSize="20dp" />
 
         <EditText
-            android:id="@+id/inputURL"
+        android:id="@+id/inputURL"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.40"
+        android:ems="10"
+        android:hint="Enter URL"
+        android:inputType="textUri"
+        android:text="10.0.2.2" />
+
+        <EditText
+            android:id="@+id/inputPort"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.50"
+            android:layout_weight="0.10"
             android:ems="10"
             android:hint="Enter URL"
             android:inputType="textUri"
-            android:text="http://" />
+            android:text="123" />
 
         <Button
             android:id="@+id/buttonConnect"
