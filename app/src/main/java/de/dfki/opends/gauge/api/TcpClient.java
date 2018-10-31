@@ -139,8 +139,10 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     @Override
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
-        tv.setText(values[0]);
-        sp.setSpeedAt(Float.parseFloat(values[0]));
+        if(tv!=null){
+            tv.setText(String.valueOf(new Double(values[0]).intValue()));
+            sp.setSpeedAt(Float.parseFloat(values[0]));
+        }
        // sp.speedPercentTo(Integer.parseInt(values[0]),500);
     }
 
