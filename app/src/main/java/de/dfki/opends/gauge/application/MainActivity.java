@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static String TAG = Tags.MAIN_ACTIVITY;
     private TcpClient tcpClient;
-    private TextView kmhDigital;
+    private TextView speedDigital;
     private TextView gearDigital;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         int port = Integer.parseInt(getIntent().getStringExtra(Tags.PORT));
 
         try {
-            tcpClient = new TcpClient(ip, port, this.getResources().openRawResource(R.raw.subscribe), kmhDigital, gearDigital, speedometer, accelerometer);
+            tcpClient = new TcpClient(ip, port, this.getResources().openRawResource(R.raw.subscribe), speedDigital, gearDigital, speedometer, accelerometer);
             tcpClient.execute();
 
         } catch (Exception e) {
@@ -76,11 +76,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setDefaultDigitalTextSettings() {
-        gearDigital = findViewById(R.id.digitalSpeed);
+        gearDigital = findViewById(R.id.digitalGear);
         gearDigital.setTypeface(Typeface.createFromAsset(getAssets(), "digital-counter-7.regular.ttf"));
 
-        kmhDigital = findViewById(R.id.digitalGear);
-        kmhDigital.setTypeface(Typeface.createFromAsset(getAssets(), "digital-counter-7.regular.ttf"));
+        speedDigital = findViewById(R.id.digitalSpeed);
+        speedDigital.setTypeface(Typeface.createFromAsset(getAssets(), "digital-counter-7.regular.ttf"));
     }
 
     private void setScreenAlwaysOnSetting() {
