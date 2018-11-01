@@ -6,15 +6,11 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.github.anastr.speedviewlib.ImageSpeedometer;
-import com.github.anastr.speedviewlib.SpeedView;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -35,24 +31,33 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import de.dfki.opends.gauge.util.Tags;
+
 
 public class TcpClient extends AsyncTask<Void, String, Void> {
 
-    private static final String TAG = "TcpClient";
+    private static final String TAG = Tags.TCP_CLIENT;
     private String dstAddress;
     private int dstPort;
-    private String response = "";
-    private byte[] request=null;
+    private byte[] request = null;
     private Socket socket;
-    TextView tv;
-    ImageSpeedometer sp;
+    private TextView speedDigital;
+    private TextView gearDigital;
 
-    public TcpClient(String address, int port, InputStream is, TextView tv, ImageSpeedometer sp) {
+    private ImageSpeedometer speedometer;
+    private ImageSpeedometer accelerometer;
+
+    private String[] values = new String[3];
+    private Node[] node = new Node[3];
+
+    public TcpClient(String address, int port, InputStream is, TextView speedDigital, TextView gearDigital, ImageSpeedometer speedometer, ImageSpeedometer accelerometer) {
         this.dstAddress = address;
         this.dstPort = port;
-        request=subscribeFromFile(is);
-        this.tv =tv;
-        this.sp = sp;
+        this.request = subscribeFromFile(is);
+        this.speedDigital = speedDigital;
+        this.speedometer = speedometer;
+        this.accelerometer = accelerometer;
+        this.gearDigital = gearDigital;
     }
 
 
@@ -61,21 +66,13 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
         try {
 
-            if(socket==null){
-
+            if (socket == null) {
                 socket = new Socket(dstAddress, dstPort);
             }
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
-                    1024);
-            byte[] buffer = new byte[1024];
 
-            int bytesRead;
             InputStream inputStream = socket.getInputStream();
             OutputStream outputStream = socket.getOutputStream();
             outputStream.write(request);
-            /*
-             * notice: inputStream.read() will block if no data return
-             */
 
             while (true) {
                 try {
@@ -103,10 +100,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
                     }
 
                     if (!messageValue.equals("")) {
-
-                        String speed =getSpeed(loadXMLFromString(messageValue));
-                        publishProgress(speed);
-                        Log.d(TAG,speed);
+                        publishProgress(getContent(loadXMLFromString(messageValue)));
                     }
 
                 } catch (Exception e) {
@@ -136,14 +130,21 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     }
 
 
+    /**
+     * [0] = Speed
+     * [1] = Acceleration
+     * [2] = Gear
+     */
     @Override
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
-        if(tv!=null){
-            tv.setText(String.valueOf(new Double(values[0]).intValue()));
-            sp.setSpeedAt(Float.parseFloat(values[0]));
-        }
-       // sp.speedPercentTo(Integer.parseInt(values[0]),500);
+        String speed = String.valueOf(Double.valueOf(values[0]).intValue());
+        String acceleration = String.valueOf(Double.valueOf(values[1]).intValue());
+        String gear = String.valueOf(values[2]);
+        speedometer.setSpeedAt(Float.valueOf(speed));
+        speedDigital.setText(speed);
+        accelerometer.setSpeedAt(Float.valueOf(acceleration));
+        gearDigital.setText(gear);
     }
 
     @Override
@@ -159,7 +160,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             String line = "";
             String xml = "";
             while ((line = bufRead.readLine()) != null) {
-                xml += line+"\n";
+                xml += line + "\n";
             }
 
             bufRead.close();
@@ -174,14 +175,14 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     }
 
 
-    public Document loadXMLFromString(String xml)  {
+    public Document loadXMLFromString(String xml) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
         Document document = null;
         try {
             builder = factory.newDocumentBuilder();
             InputSource is = new InputSource(new StringReader(xml));
-           document = builder.parse(is);
+            document = builder.parse(is);
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (SAXException e) {
@@ -192,15 +193,28 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         return document;
     }
 
-    public String getSpeed(Document document){
+    public String[] getContent(Document document) {
         XPath xPath = XPathFactory.newInstance().newXPath();
-        Node node = null;
+
         try {
-            node = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/speed/text()", document, XPathConstants.NODE);
+            node[0] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/speed/text()", document, XPathConstants.NODE);
+            node[1] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/acceleration/text()", document, XPathConstants.NODE);
+            node[2] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/gearUnit/Properties/currentGear/text()", document, XPathConstants.NODE);
+
+            if (node[0] != null) {
+                values[0] = node[0].getNodeValue();
+            }
+            if (node[1] != null) {
+                values[1] = node[1].getNodeValue();
+            }
+            if (node[2] != null) {
+                values[2] = node[2].getNodeValue();
+
+            }
         } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
-        return node.getNodeValue();
+        return values;
     }
 
 }

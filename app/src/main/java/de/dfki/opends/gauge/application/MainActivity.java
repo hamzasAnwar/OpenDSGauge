@@ -5,56 +5,87 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.github.anastr.speedviewlib.ImageSpeedometer;
 
 import de.dfki.opends.gauge.api.TcpClient;
+import de.dfki.opends.gauge.util.Tags;
 
 public class MainActivity extends AppCompatActivity {
 
 
-    TcpClient tcpClient;
-    TextView tv;
-    ImageSpeedometer sp;
-    protected PowerManager.WakeLock mWakeLock;
-    private static String TAG ="MainActivity";
+    private static String TAG = Tags.MAIN_ACTIVITY;
+    private TcpClient tcpClient;
+    private TextView kmhDigital;
+    private TextView gearDigital;
+    private ImageSpeedometer speedometer;
+    private ImageSpeedometer accelerometer;
+    private PowerManager.WakeLock mWakeLock;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tv = findViewById(R.id.digitalSpeed);
-        tv.setTypeface(Typeface.createFromAsset(getAssets(),"digital-counter-7.regular.ttf"));
-        sp = findViewById(R.id.speedView);
-        sp.setMaxSpeed(260);
-        //to keep the screen on for the activity
-        final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        this.mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
-        this.mWakeLock.acquire();
+
+        //configure default settings
+        setDefaultDigitalTextSettings();
+        setDefaultAccelerometerSettings();
+        setDefaultSpeedometerSettings();
+        setScreenAlwaysOnSetting();
         initialzeTcpClient();
     }
 
 
+    private void initialzeTcpClient() {
 
-    private boolean initialzeTcpClient() {
-
-        String ip = getIntent().getStringExtra("ip");
-        int port = Integer.parseInt(getIntent().getStringExtra("port"));
+        String ip = getIntent().getStringExtra(Tags.IP);
+        int port = Integer.parseInt(getIntent().getStringExtra(Tags.PORT));
 
         try {
-            tcpClient = new TcpClient(ip,port,this.getResources().openRawResource(R.raw.subscribe), tv,sp);
+            tcpClient = new TcpClient(ip, port, this.getResources().openRawResource(R.raw.subscribe), kmhDigital, gearDigital, speedometer, accelerometer);
             tcpClient.execute();
 
         } catch (Exception e) {
-            return false;
+            Log.d(TAG, e.getLocalizedMessage());
         }
-
-        return true;
     }
 
     @Override
     public void onDestroy() {
         this.mWakeLock.release();
         super.onDestroy();
+    }
+
+
+    private void setDefaultSpeedometerSettings() {
+        speedometer = findViewById(R.id.speedometer);
+        speedometer.setSpeedTextSize(0);
+        speedometer.setUnitTextSize(0);
+        speedometer.setMaxSpeed(260);
+    }
+
+
+    private void setDefaultAccelerometerSettings() {
+        accelerometer = findViewById(R.id.accelerometer);
+        accelerometer.setSpeedTextSize(0);
+        accelerometer.setUnitTextSize(0);
+        accelerometer.setMinMaxSpeed(0, 8);
+    }
+
+
+    private void setDefaultDigitalTextSettings() {
+        gearDigital = findViewById(R.id.digitalSpeed);
+        gearDigital.setTypeface(Typeface.createFromAsset(getAssets(), "digital-counter-7.regular.ttf"));
+
+        kmhDigital = findViewById(R.id.digitalGear);
+        kmhDigital.setTypeface(Typeface.createFromAsset(getAssets(), "digital-counter-7.regular.ttf"));
+    }
+
+    private void setScreenAlwaysOnSetting() {
+        final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        this.mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
+        this.mWakeLock.acquire();
     }
 }

@@ -6,10 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
+import de.dfki.opends.gauge.util.Tags;
+
 public class TcpConfig extends AppCompatActivity {
 
     private EditText editTextIp;
     private EditText editTextPort;
+
+    private static final String TAG = Tags.TCP_CONFIG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +27,10 @@ public class TcpConfig extends AppCompatActivity {
     public void connectButton(View view) {
 
         Intent gauge = new Intent(this, MainActivity.class);
-        gauge.putExtra("ip", editTextIp.getText().toString());
-        gauge.putExtra("port", editTextPort.getText().toString());
+        gauge.putExtra(Tags.IP, editTextIp.getText().toString());
+        gauge.putExtra(Tags.PORT, editTextPort.getText().toString());
         this.startActivity(gauge);
-
-
+        
     }
 
 
