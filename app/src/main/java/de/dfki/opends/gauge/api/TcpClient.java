@@ -132,18 +132,24 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
     /**
      * [0] = Speed
-     * [1] = Acceleration
+     * [1] = RPM
      * [2] = Gear
      */
     @Override
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
         String speed = String.valueOf(Double.valueOf(values[0]).intValue());
-        String acceleration = String.valueOf(Double.valueOf(values[1]).intValue());
+
+        float rpm = Float.valueOf(values[1]);
+
         String gear = String.valueOf(values[2]);
+
+        //Normalize RPM
+        rpm = (rpm-750)/1000;
+
         speedometer.setSpeedAt(Float.valueOf(speed));
         speedDigital.setText(speed);
-        accelerometer.setSpeedAt(Float.valueOf(acceleration));
+        accelerometer.setSpeedAt(rpm);
         gearDigital.setText(gear);
     }
 
@@ -198,7 +204,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
         try {
             node[0] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/speed/text()", document, XPathConstants.NODE);
-            node[1] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/acceleration/text()", document, XPathConstants.NODE);
+            node[1] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/engineCompartment/engine/Properties/actualRpm/text()", document, XPathConstants.NODE);
             node[2] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/gearUnit/Properties/currentGear/text()", document, XPathConstants.NODE);
 
             if (node[0] != null) {

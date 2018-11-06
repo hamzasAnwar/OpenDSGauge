@@ -27,26 +27,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textSize="100sp"
-        android:textColor="#f5f5f5"/>
+        android:text="speed"
+        android:textColor="#f5f5f5"
+        android:textSize="100sp" />
 
 
     <TextView
         android:id="@+id/digitalGear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/accelerometer"
         android:textSize="100sp"
-        android:textColor="#f5f5f5"/>
+        android:text="gear"
+        android:textColor="#f5f5f5" />
 
     <TextView
         android:id="@+id/kmh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="15sp"
         android:text="@string/tag_kmh"
-        android:textColor="#f5f5f5"/>
-
+        android:textColor="#f5f5f5"
+        android:layout_marginTop="10dp"
+        android:layout_alignBottom="@id/digitalSpeed"
+        android:layout_alignRight="@id/digitalSpeed"/>
 
     <com.github.anastr.speedviewlib.ImageSpeedometer
         android:id="@+id/speedometer"
@@ -60,6 +63,7 @@
         app:sv_indicator="LineIndicator"
         app:sv_indicatorColor="#a750bcff"
         app:sv_speedTextColor="#fff"
-        app:sv_unitTextColor="#fff" />
+        app:sv_unitTextColor="#fff"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

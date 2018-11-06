@@ -2,7 +2,7 @@
 <Message>
     <Event Name="Unsubscribe">/root/thisVehicle</Event>
     <Event Name="Subscribe">/root/thisVehicle/physicalAttributes/Properties/speed</Event>
-    <Event Name="Subscribe">/root/thisVehicle/physicalAttributes/Properties/acceleration</Event>
+    <Event Name="Subscribe">/root/thisVehicle/exterior/engineCompartment/engine/Properties/actualRpm</Event>
     <Event Name="Subscribe">/root/thisVehicle/exterior/gearUnit/Properties/currentGear</Event>
     <Event Name="SetUpdateInterval">10</Event>
     <Event Name="EstablishConnection"/>
