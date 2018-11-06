@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         speedometer = findViewById(R.id.speedometer);
         speedometer.setSpeedTextSize(0);
         speedometer.setUnitTextSize(0);
-        speedometer.setMaxSpeed(260);
+        speedometer.setMaxSpeed(220);
     }
 
 

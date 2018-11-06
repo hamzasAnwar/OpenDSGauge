@@ -16,9 +16,9 @@
         android:visibility="visible"
         android:layout_marginTop="100dp"
         android:layout_gravity="center_horizontal"
-        app:sv_image="@drawable/speed"
+        app:sv_image="@drawable/rpm"
         app:sv_indicator="LineIndicator"
-        app:sv_indicatorColor="#a750bcff"
+        app:sv_indicatorColor="#ff3a43"
         app:sv_speedTextColor="#fff"
         app:sv_unitTextColor="#fff" />
 
@@ -61,7 +61,7 @@
         android:layout_alignParentRight="true"
         app:sv_image="@drawable/speed"
         app:sv_indicator="LineIndicator"
-        app:sv_indicatorColor="#a750bcff"
+        app:sv_indicatorColor="#ff3a43"
         app:sv_speedTextColor="#fff"
         app:sv_unitTextColor="#fff"
         android:layout_alignParentEnd="true" />
