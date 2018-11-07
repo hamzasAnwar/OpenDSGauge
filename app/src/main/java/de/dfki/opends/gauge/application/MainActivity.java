@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         accelerometer = findViewById(R.id.accelerometer);
         accelerometer.setSpeedTextSize(0);
         accelerometer.setUnitTextSize(0);
-        accelerometer.setMinMaxSpeed(0, 8);
+        accelerometer.setMinMaxSpeed(0, 6000);
     }
 
 

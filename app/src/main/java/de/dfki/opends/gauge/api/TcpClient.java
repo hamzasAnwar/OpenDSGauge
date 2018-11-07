@@ -13,7 +13,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -46,9 +45,13 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
+    private XPath xPath;
+    private DocumentBuilderFactory factory;
+    private DocumentBuilder builder = null;
+    private Document document = null;
 
-    private String[] values = new String[3];
-    private Node[] node = new Node[3];
+    private String[] values;
+    private Node[] node;
 
     public TcpClient(String address, int port, InputStream is, TextView speedDigital, TextView gearDigital, ImageSpeedometer speedometer, ImageSpeedometer accelerometer) {
         this.dstAddress = address;
@@ -58,6 +61,17 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.speedometer = speedometer;
         this.accelerometer = accelerometer;
         this.gearDigital = gearDigital;
+        this.node = new Node[3];
+        this.values = new String[3];
+        this.xPath = XPathFactory.newInstance().newXPath();
+        this.factory = DocumentBuilderFactory.newInstance();
+
+        try {
+            builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -76,7 +90,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
             while (true) {
                 try {
-                    BufferedReader r = new BufferedReader(new InputStreamReader(inputStream));
+                    BufferedReader r = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
 
                     String messageValue = "";
 
@@ -138,19 +152,34 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     @Override
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
-        String speed = String.valueOf(Double.valueOf(values[0]).intValue());
 
-        float rpm = Float.valueOf(values[1]);
 
-        String gear = String.valueOf(values[2]);
+        Float speed = (float) 0;
+        float rpm = 0;
+        String gear = "1";
+
+
+        if (values[0] != null) {
+            speed = Float.valueOf(values[0]);
+        }
+
+        if (values[1] != null) {
+            rpm = Float.valueOf(values[1]);
+        }
+
+        if (values[2] != null) {
+            gear = values[2];
+        }
 
         //Normalize RPM
-        rpm = (rpm-750)/1000;
+        rpm = (rpm - 750);
 
-        speedometer.setSpeedAt(Float.valueOf(speed));
-        speedDigital.setText(speed);
+        speedometer.setSpeedAt(speed);
+        speedDigital.setText(String.valueOf(speed.intValue()));
         accelerometer.setSpeedAt(rpm);
         gearDigital.setText(gear);
+
+
     }
 
     @Override
@@ -182,15 +211,11 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
 
     public Document loadXMLFromString(String xml) {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = null;
-        Document document = null;
+
         try {
-            builder = factory.newDocumentBuilder();
             InputSource is = new InputSource(new StringReader(xml));
             document = builder.parse(is);
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -200,7 +225,6 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     }
 
     public String[] getContent(Document document) {
-        XPath xPath = XPathFactory.newInstance().newXPath();
 
         try {
             node[0] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/speed/text()", document, XPathConstants.NODE);
