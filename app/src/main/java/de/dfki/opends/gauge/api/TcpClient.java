@@ -30,6 +30,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import de.dfki.opends.gauge.application.R;
 import de.dfki.opends.gauge.util.Tags;
 
 
@@ -153,33 +154,39 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     protected void onProgressUpdate(String... values) {
         super.onProgressUpdate(values);
 
-
-        Float speed = (float) 0;
-        float rpm = 0;
-        String gear = "1";
-
-
         if (values[0] != null) {
-            speed = Float.valueOf(values[0]);
+            applySpeedSettings(values[0]);
         }
 
         if (values[1] != null) {
-            rpm = Float.valueOf(values[1]);
+            applyRpmSettings(values[1]);
         }
 
         if (values[2] != null) {
-            gear = values[2];
+            applyGearSettings(values[2]);
         }
 
+    }
+
+    private void applyRpmSettings(String value) {
+        Float rpm = Float.valueOf(value);
         //Normalize RPM
         rpm = (rpm - 750);
+        accelerometer.setSpeedAt(rpm);
+    }
 
+    private void applySpeedSettings(String value) {
+        Float speed = Float.valueOf(value);
         speedometer.setSpeedAt(speed);
         speedDigital.setText(String.valueOf(speed.intValue()));
-        accelerometer.setSpeedAt(rpm);
-        gearDigital.setText(gear);
+    }
 
-
+    private void applyGearSettings(String gear) {
+        if(gear.equals("0")){
+            gearDigital.setText("N");
+        }else{
+            gearDigital.setText(gear);
+        }
     }
 
     @Override
