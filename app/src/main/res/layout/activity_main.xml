@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/reallyBlack"
     android:padding="30dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity">
 
 
@@ -13,10 +13,59 @@
         android:id="@+id/accelerometer"
         android:layout_width="400dp"
         android:layout_height="400dp"
-        android:visibility="visible"
-        android:layout_marginTop="100dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:visibility="visible"
         app:sv_image="@drawable/rpm"
+        app:sv_indicator="LineIndicator"
+        app:sv_indicatorColor="#ff3a43"
+        app:sv_speedTextColor="#fff"
+        app:sv_unitTextColor="#fff" />
+
+    <ImageView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/nav_cross_left" />
+
+
+    <TextView
+        android:id="@+id/digitalGear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/accelerometer"
+        android:layout_marginLeft="180dp"
+        android:layout_marginBottom="50dp"
+        android:paddingRight="20dp"
+        android:text="1"
+        android:textColor="#f5f5f5"
+        android:textSize="60sp" />
+
+
+    <TextView
+        android:id="@+id/gearMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/digitalGear"
+        android:layout_alignBottom="@id/digitalGear"
+        android:text="N"
+        android:textColor="#ff3a43"
+        android:textSize="25dp" />
+
+
+    <com.github.anastr.speedviewlib.ImageSpeedometer
+        android:id="@+id/speedometer"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:visibility="visible"
+        app:sv_image="@drawable/speed"
         app:sv_indicator="LineIndicator"
         app:sv_indicatorColor="#ff3a43"
         app:sv_speedTextColor="#fff"
@@ -26,44 +75,62 @@
         android:id="@+id/digitalSpeed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="speed"
+        android:layout_alignRight="@id/speedometer"
+        android:layout_alignBottom="@id/speedometer"
+        android:layout_marginRight="150dp"
+        android:layout_marginBottom="50dp"
+        android:text="0"
         android:textColor="#f5f5f5"
-        android:textSize="100sp" />
+        android:textSize="60sp" />
 
-
-    <TextView
-        android:id="@+id/digitalGear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="100sp"
-        android:text="gear"
-        android:textColor="#f5f5f5" />
 
     <TextView
         android:id="@+id/kmh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:text="@string/tag_kmh"
-        android:textColor="#f5f5f5"
-        android:layout_marginTop="10dp"
         android:layout_alignBottom="@id/digitalSpeed"
-        android:layout_alignRight="@id/digitalSpeed"/>
+        android:layout_marginTop="10dp"
+        android:text="@string/tag_kmh"
+        android:layout_marginLeft="815dp"
+        android:textColor="#ff3a43"
+        android:textSize="20dp" />
 
-    <com.github.anastr.speedviewlib.ImageSpeedometer
-        android:id="@+id/speedometer"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_marginTop="100dp"
-        android:visibility="visible"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentRight="true"
-        app:sv_image="@drawable/speed"
-        app:sv_indicator="LineIndicator"
-        app:sv_indicatorColor="#ff3a43"
-        app:sv_speedTextColor="#fff"
-        app:sv_unitTextColor="#fff"
-        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:id="@+id/handbrake"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.1"
+        android:layout_below="@id/navigation"
+        android:src="@drawable/handbrake" />
+
+
+
+
+    <ImageView
+        android:id="@+id/left"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.2"
+        android:layout_toLeftOf="@id/handbrake"
+        android:layout_below="@id/handbrake"
+        android:src="@drawable/left" />
+
+    <ImageView
+        android:id="@+id/right"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.2"
+        android:layout_toRightOf="@id/handbrake"
+        android:layout_below="@id/handbrake"
+        android:src="@drawable/right" />
+
+
 
 </RelativeLayout>

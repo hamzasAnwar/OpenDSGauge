@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.anastr.speedviewlib.ImageSpeedometer;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private TcpClient tcpClient;
     private TextView speedDigital;
     private TextView gearDigital;
+    private ImageView handbrake;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
     private PowerManager.WakeLock mWakeLock;
@@ -33,8 +35,13 @@ public class MainActivity extends AppCompatActivity {
         setDefaultDigitalTextSettings();
         setDefaultAccelerometerSettings();
         setDefaultSpeedometerSettings();
+        setDefaultHandbrakeSettings();
         setScreenAlwaysOnSetting();
         initialzeTcpClient();
+    }
+
+    private void setDefaultHandbrakeSettings() {
+        handbrake = findViewById(R.id.handbrake);
     }
 
 
@@ -44,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         int port = Integer.parseInt(getIntent().getStringExtra(Tags.PORT));
 
         try {
-            tcpClient = new TcpClient(ip, port, this.getResources().openRawResource(R.raw.subscribe), speedDigital, gearDigital, speedometer, accelerometer);
+            tcpClient = new TcpClient(ip, port, this.getResources().openRawResource(R.raw.subscribe), speedDigital, gearDigital, speedometer, accelerometer,handbrake);
             tcpClient.execute();
 
         } catch (Exception e) {

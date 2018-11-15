@@ -3,6 +3,7 @@ package de.dfki.opends.gauge.api;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.anastr.speedviewlib.ImageSpeedometer;
@@ -43,7 +44,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private Socket socket;
     private TextView speedDigital;
     private TextView gearDigital;
-
+    private ImageView handbrake;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
     private XPath xPath;
@@ -54,7 +55,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private String[] values;
     private Node[] node;
 
-    public TcpClient(String address, int port, InputStream is, TextView speedDigital, TextView gearDigital, ImageSpeedometer speedometer, ImageSpeedometer accelerometer) {
+    public TcpClient(String address, int port, InputStream is, TextView speedDigital, TextView gearDigital, ImageSpeedometer speedometer, ImageSpeedometer accelerometer,ImageView handbrake) {
         this.dstAddress = address;
         this.dstPort = port;
         this.request = subscribeFromFile(is);
@@ -62,8 +63,10 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.speedometer = speedometer;
         this.accelerometer = accelerometer;
         this.gearDigital = gearDigital;
-        this.node = new Node[3];
-        this.values = new String[3];
+        this.handbrake = handbrake;
+
+        this.node = new Node[4];
+        this.values = new String[4];
         this.xPath = XPathFactory.newInstance().newXPath();
         this.factory = DocumentBuilderFactory.newInstance();
 
@@ -165,6 +168,9 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         if (values[2] != null) {
             applyGearSettings(values[2]);
         }
+        if (values[3] != null) {
+            applyHandbrakeSettings(values[3]);
+        }
 
     }
 
@@ -173,6 +179,15 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         //Normalize RPM
         rpm = (rpm - 750);
         accelerometer.setSpeedAt(rpm);
+    }
+
+    private void applyHandbrakeSettings(String value) {
+       if(value.equals("true")){
+           handbrake.setAlpha((float) 1.0);
+       }else{
+           handbrake.setAlpha((float) 0.1);
+       }
+
     }
 
     private void applySpeedSettings(String value) {
@@ -237,6 +252,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             node[0] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/speed/text()", document, XPathConstants.NODE);
             node[1] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/engineCompartment/engine/Properties/actualRpm/text()", document, XPathConstants.NODE);
             node[2] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/gearUnit/Properties/currentGear/text()", document, XPathConstants.NODE);
+            node[3] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/handbrake/text()", document, XPathConstants.NODE);
 
             if (node[0] != null) {
                 values[0] = node[0].getNodeValue();
@@ -246,7 +262,9 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             }
             if (node[2] != null) {
                 values[2] = node[2].getNodeValue();
-
+            }
+            if (node[3] != null) {
+                values[3] = node[3].getNodeValue();
             }
         } catch (XPathExpressionException e) {
             e.printStackTrace();

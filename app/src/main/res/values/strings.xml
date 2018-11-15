@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">OpenDSGauge</string>
-    <string name="tag_kmh">Km/h</string>
+    <string name="tag_kmh">KM/H</string>
 </resources>
