@@ -3,6 +3,10 @@ package de.dfki.opends.gauge.api;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +26,7 @@ import java.io.StringReader;
 import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -33,6 +38,7 @@ import javax.xml.xpath.XPathFactory;
 
 import de.dfki.opends.gauge.application.R;
 import de.dfki.opends.gauge.util.Tags;
+import de.dfki.opends.gauge.util.ViewMappings;
 
 
 public class TcpClient extends AsyncTask<Void, String, Void> {
@@ -45,30 +51,39 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private TextView speedDigital;
     private TextView gearDigital;
     private ImageView handbrake;
+    private ImageView leftTurn;
+    private ImageView rightTurn;
+    private ImageView navigation;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
     private XPath xPath;
     private DocumentBuilderFactory factory;
     private DocumentBuilder builder = null;
     private Document document = null;
-
+    private String previousSignal = "OFF";
     private String[] values;
     private Node[] node;
+    private Animation animation;
 
-    public TcpClient(String address, int port, InputStream is, TextView speedDigital, TextView gearDigital, ImageSpeedometer speedometer, ImageSpeedometer accelerometer,ImageView handbrake) {
+    public TcpClient(String address, int port, InputStream is, Map<String,View> viewMap) {
         this.dstAddress = address;
         this.dstPort = port;
         this.request = subscribeFromFile(is);
-        this.speedDigital = speedDigital;
-        this.speedometer = speedometer;
-        this.accelerometer = accelerometer;
-        this.gearDigital = gearDigital;
-        this.handbrake = handbrake;
+        this.speedDigital = (TextView) viewMap.get(ViewMappings.SPEEDOMETER_DIGITAL);
+        this.speedometer = (ImageSpeedometer) viewMap.get(ViewMappings.SPEEDOMETER);
+        this.accelerometer = (ImageSpeedometer) viewMap.get(ViewMappings.RPM_METER);
+        this.gearDigital = (TextView) viewMap.get(ViewMappings.CURRENT_SHIFT);
+        this.handbrake = (ImageView) viewMap.get(ViewMappings.HANDBRAKE);
+        this.leftTurn = (ImageView) viewMap.get(ViewMappings.LEFT_TURN);
+        this.rightTurn = (ImageView) viewMap.get(ViewMappings.RIGHT_TURN);
+        //this.navigation = (ImageView) viewMap.get(ViewMappings.NAVIGATION);
 
-        this.node = new Node[4];
-        this.values = new String[4];
+
+        this.node = new Node[viewMap.size()];
+        this.values = new String[viewMap.size()];
         this.xPath = XPathFactory.newInstance().newXPath();
         this.factory = DocumentBuilderFactory.newInstance();
+        this.setupTurnSignalAnimation();
 
         try {
             builder = factory.newDocumentBuilder();
@@ -76,6 +91,14 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             e.printStackTrace();
         }
 
+    }
+
+    private void setupTurnSignalAnimation() {
+        animation = new AlphaAnimation(1,(float) 0.15);
+        animation.setDuration(400);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(Animation.REVERSE);
     }
 
 
@@ -152,6 +175,8 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
      * [0] = Speed
      * [1] = RPM
      * [2] = Gear
+     * [3] = Handbrake
+     * [4] = Turn signals
      */
     @Override
     protected void onProgressUpdate(String... values) {
@@ -171,6 +196,40 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         if (values[3] != null) {
             applyHandbrakeSettings(values[3]);
         }
+        if (values[4] != null) {
+            applyTurnSignalSettings(values[4]);
+        }
+
+    }
+
+    private void applyTurnSignalSettings(String value) {
+
+        if(!value.equals(previousSignal)){
+
+            if(value.equals("BOTH")){
+                rightTurn.setAlpha((float) 1.0);
+                leftTurn.setAlpha((float) 1.0);
+                leftTurn.startAnimation(animation);
+                rightTurn.startAnimation(animation);
+            }else if(value.equals("LEFT")){
+                leftTurn.setAlpha((float) 1.0);
+                leftTurn.startAnimation(animation);
+                rightTurn.setAlpha((float) 0.15);
+                rightTurn.clearAnimation();
+            }else if(value.equals("RIGHT") ){
+                rightTurn.startAnimation(animation);
+                rightTurn.setAlpha((float) 1.0);
+                leftTurn.setAlpha((float) 0.15);
+                leftTurn.clearAnimation();
+            }else{
+                rightTurn.setAlpha((float) 0.15);
+                leftTurn.setAlpha((float) 0.15);
+                rightTurn.clearAnimation();
+                leftTurn.clearAnimation();
+            }
+        }
+
+        previousSignal=value;
 
     }
 
@@ -253,6 +312,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             node[1] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/engineCompartment/engine/Properties/actualRpm/text()", document, XPathConstants.NODE);
             node[2] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/gearUnit/Properties/currentGear/text()", document, XPathConstants.NODE);
             node[3] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/handbrake/text()", document, XPathConstants.NODE);
+            node[4] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/turnSignal/text()", document, XPathConstants.NODE);
 
             if (node[0] != null) {
                 values[0] = node[0].getNodeValue();
@@ -265,6 +325,9 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             }
             if (node[3] != null) {
                 values[3] = node[3].getNodeValue();
+            }
+            if (node[4] != null) {
+                values[4] = node[4].getNodeValue();
             }
         } catch (XPathExpressionException e) {
             e.printStackTrace();

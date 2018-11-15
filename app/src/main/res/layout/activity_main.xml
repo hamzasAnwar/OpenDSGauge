@@ -115,7 +115,7 @@
         android:layout_height="55dp"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
-        android:alpha="0.2"
+        android:alpha="0.15"
         android:layout_toLeftOf="@id/handbrake"
         android:layout_below="@id/handbrake"
         android:src="@drawable/left" />
@@ -126,7 +126,7 @@
         android:layout_height="55dp"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
-        android:alpha="0.2"
+        android:alpha="0.15"
         android:layout_toRightOf="@id/handbrake"
         android:layout_below="@id/handbrake"
         android:src="@drawable/right" />
