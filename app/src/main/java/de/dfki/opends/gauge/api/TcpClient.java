@@ -179,6 +179,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
      * [2] = Gear
      * [3] = Handbrake
      * [4] = Turn signals
+     * [5] = TransmissionMode
      */
     @Override
     protected void onProgressUpdate(String... values) {
