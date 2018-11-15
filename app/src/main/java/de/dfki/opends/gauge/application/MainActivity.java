@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private TcpClient tcpClient;
     private TextView speedDigital;
     private TextView gearDigital;
+    private TextView currentGearMode;
     private ImageView handbrake;
     private ImageView leftTurn;
     private ImageView rightTurn;
@@ -115,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
         gearDigital = findViewById(R.id.digitalGear);
         gearDigital.setTypeface(Typeface.createFromAsset(getAssets(), "digital-counter-7.regular.ttf"));
 
+        currentGearMode = findViewById(R.id.gearMode);
+
+        viewMap.put(ViewMappings.CURRENT_GEAR,currentGearMode);
         viewMap.put(ViewMappings.CURRENT_SHIFT,gearDigital);
 
     }

@@ -50,6 +50,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private Socket socket;
     private TextView speedDigital;
     private TextView gearDigital;
+    private TextView currentGearMode;
     private ImageView handbrake;
     private ImageView leftTurn;
     private ImageView rightTurn;
@@ -73,6 +74,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.speedometer = (ImageSpeedometer) viewMap.get(ViewMappings.SPEEDOMETER);
         this.accelerometer = (ImageSpeedometer) viewMap.get(ViewMappings.RPM_METER);
         this.gearDigital = (TextView) viewMap.get(ViewMappings.CURRENT_SHIFT);
+        this.currentGearMode = (TextView) viewMap.get(ViewMappings.CURRENT_GEAR);
         this.handbrake = (ImageView) viewMap.get(ViewMappings.HANDBRAKE);
         this.leftTurn = (ImageView) viewMap.get(ViewMappings.LEFT_TURN);
         this.rightTurn = (ImageView) viewMap.get(ViewMappings.RIGHT_TURN);
@@ -199,6 +201,9 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         if (values[4] != null) {
             applyTurnSignalSettings(values[4]);
         }
+        if(values[5]!=null){
+            applyCurrentGearMode(values[5]);
+        }
 
     }
 
@@ -256,11 +261,11 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     }
 
     private void applyGearSettings(String gear) {
-        if(gear.equals("0")){
-            gearDigital.setText("N");
-        }else{
-            gearDigital.setText(gear);
-        }
+        gearDigital.setText(gear);
+    }
+
+    private void applyCurrentGearMode(String mode) {
+        currentGearMode.setText(mode);
     }
 
     @Override
@@ -313,22 +318,14 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             node[2] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/gearUnit/Properties/currentGear/text()", document, XPathConstants.NODE);
             node[3] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/handbrake/text()", document, XPathConstants.NODE);
             node[4] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/turnSignal/text()", document, XPathConstants.NODE);
+            node[5] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/gearUnit/Properties/currentTransmission/text()", document, XPathConstants.NODE);
 
-            if (node[0] != null) {
-                values[0] = node[0].getNodeValue();
+            for(int i=0;i<node.length;i++){
+                if(node[i]!=null){
+                    values[i]=node[i].getNodeValue();
+                }
             }
-            if (node[1] != null) {
-                values[1] = node[1].getNodeValue();
-            }
-            if (node[2] != null) {
-                values[2] = node[2].getNodeValue();
-            }
-            if (node[3] != null) {
-                values[3] = node[3].getNodeValue();
-            }
-            if (node[4] != null) {
-                values[4] = node[4].getNodeValue();
-            }
+
         } catch (XPathExpressionException e) {
             e.printStackTrace();
         }
