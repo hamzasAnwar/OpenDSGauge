@@ -1,6 +1,7 @@
 package de.dfki.opends.gauge.application;
 
 import android.content.Context;
+import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -30,7 +31,9 @@ public class MainActivity extends AppCompatActivity {
     private ImageView handbrake;
     private ImageView leftTurn;
     private ImageView rightTurn;
+    private ImageView navigation;
 
+    private ImageSpeedometer fuelmeter;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
     private PowerManager.WakeLock mWakeLock;
@@ -50,7 +53,19 @@ public class MainActivity extends AppCompatActivity {
         setDefaultHandbrakeSettings();
         setDefaultTurnSignalSettings();
         setScreenAlwaysOnSetting();
+        setDefaultNavigationSettings();
+        setDefaultFuelSettings();
         initialzeTcpClient();
+    }
+
+    private void setDefaultFuelSettings() {
+        fuelmeter = findViewById(R.id.fuelgauge);
+        fuelmeter.setMinMaxSpeed(15,86);
+        fuelmeter.setSpeedTextSize(0);
+        fuelmeter.setUnitTextSize(0);
+        fuelmeter.setWithTremble(true);
+        viewMap.put(ViewMappings.FUEL_METER,fuelmeter);
+
     }
 
     private void setDefaultTurnSignalSettings() {
@@ -64,6 +79,11 @@ public class MainActivity extends AppCompatActivity {
     private void setDefaultHandbrakeSettings() {
         handbrake = findViewById(R.id.handbrake);
         viewMap.put(ViewMappings.HANDBRAKE,handbrake);
+    }
+
+    private void setDefaultNavigationSettings() {
+        navigation = findViewById(R.id.navigation);
+        viewMap.put(ViewMappings.NAVIGATION,navigation);
     }
 
 
@@ -94,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         speedometer.setUnitTextSize(0);
         speedometer.setMaxSpeed(220);
 
+        speedometer.setWithTremble(true);
 
         speedDigital = findViewById(R.id.digitalSpeed);
         speedDigital.setTypeface(Typeface.createFromAsset(getAssets(), "digital-counter-7.regular.ttf"));
@@ -108,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         accelerometer.setSpeedTextSize(0);
         accelerometer.setUnitTextSize(0);
         accelerometer.setMinMaxSpeed(0, 6000);
+        accelerometer.setWithTremble(true);
         viewMap.put(ViewMappings.RPM_METER,accelerometer);
     }
 

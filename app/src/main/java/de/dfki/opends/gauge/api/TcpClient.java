@@ -36,9 +36,9 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import de.dfki.opends.gauge.application.R;
 import de.dfki.opends.gauge.util.Tags;
 import de.dfki.opends.gauge.util.ViewMappings;
+
 
 
 public class TcpClient extends AsyncTask<Void, String, Void> {
@@ -57,11 +57,13 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private ImageView navigation;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
+    private ImageSpeedometer fuelGauge;
     private XPath xPath;
     private DocumentBuilderFactory factory;
     private DocumentBuilder builder = null;
     private Document document = null;
     private String previousSignal = "OFF";
+    private String previousNavigation = "";
     private String[] values;
     private Node[] node;
     private Animation animation;
@@ -73,12 +75,13 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.speedDigital = (TextView) viewMap.get(ViewMappings.SPEEDOMETER_DIGITAL);
         this.speedometer = (ImageSpeedometer) viewMap.get(ViewMappings.SPEEDOMETER);
         this.accelerometer = (ImageSpeedometer) viewMap.get(ViewMappings.RPM_METER);
+        this.fuelGauge = (ImageSpeedometer) viewMap.get(ViewMappings.FUEL_METER);
         this.gearDigital = (TextView) viewMap.get(ViewMappings.CURRENT_SHIFT);
         this.currentGearMode = (TextView) viewMap.get(ViewMappings.CURRENT_GEAR);
         this.handbrake = (ImageView) viewMap.get(ViewMappings.HANDBRAKE);
         this.leftTurn = (ImageView) viewMap.get(ViewMappings.LEFT_TURN);
         this.rightTurn = (ImageView) viewMap.get(ViewMappings.RIGHT_TURN);
-        //this.navigation = (ImageView) viewMap.get(ViewMappings.NAVIGATION);
+        this.navigation = (ImageView) viewMap.get(ViewMappings.NAVIGATION);
 
 
         this.node = new Node[viewMap.size()];
@@ -205,7 +208,27 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         if(values[5]!=null){
             applyCurrentGearMode(values[5]);
         }
+        if(values[6]!=null){
+            applyNavigation(values[6]);
+        }
+        if(values[7]!=null){
+            applyFuel(values[7]);
+        }
 
+    }
+
+    private void applyFuel(String value) {
+        float fuel = Float.valueOf(value).intValue();
+        Log.d(TAG,fuel+"");
+        fuelGauge.setSpeedAt(fuel);
+    }
+
+    private void applyNavigation(String value) {
+        if(!value.equals(previousNavigation)){
+            /** todo? **/
+            Log.d(TAG,value);
+            previousNavigation = value;
+        }
     }
 
     private void applyTurnSignalSettings(String value) {
@@ -320,6 +343,8 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             node[3] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/handbrake/text()", document, XPathConstants.NODE);
             node[4] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/turnSignal/text()", document, XPathConstants.NODE);
             node[5] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/gearUnit/Properties/currentTransmission/text()", document, XPathConstants.NODE);
+            node[6] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/navigationImage/text()", document, XPathConstants.NODE);
+            node[7] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/fueling/fuelType/tank/Properties/actualAmount/text()", document, XPathConstants.NODE);
 
             for(int i=0;i<node.length;i++){
                 if(node[i]!=null){

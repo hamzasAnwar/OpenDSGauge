@@ -22,14 +22,6 @@
         app:sv_speedTextColor="#fff"
         app:sv_unitTextColor="#fff" />
 
-    <ImageView
-        android:id="@+id/navigation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/nav_cross_left" />
 
 
     <TextView
@@ -100,20 +92,16 @@
         android:id="@+id/handbrake"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:alpha="0.1"
-        android:layout_below="@id/navigation"
+        android:layout_marginTop="450dp"
         android:src="@drawable/handbrake" />
-
-
 
 
     <ImageView
         android:id="@+id/left"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:alpha="0.15"
         android:layout_toLeftOf="@id/handbrake"
@@ -124,13 +112,37 @@
         android:id="@+id/right"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         android:alpha="0.15"
         android:layout_toRightOf="@id/handbrake"
         android:layout_below="@id/handbrake"
         android:src="@drawable/right" />
 
+    <ImageView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/nav_cross_left" />
+
+
+    <com.github.anastr.speedviewlib.ImageSpeedometer
+        android:id="@+id/fuelgauge"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="100dp"
+        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/navigation"
+        android:layout_marginBottom="100dp"
+        app:sv_image="@drawable/fuelgauge"
+        app:sv_speedometerMode="TOP"
+        app:sv_indicator="LineIndicator"
+        app:sv_indicatorColor="#ff3a43"
+        app:sv_speedTextColor="#fff"
+        app:sv_unitTextColor="#fff" />
 
 
 </RelativeLayout>

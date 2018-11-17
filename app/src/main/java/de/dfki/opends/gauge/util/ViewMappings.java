@@ -10,4 +10,5 @@ public class ViewMappings {
     public static final String CURRENT_GEAR = "CURRENT_GEAR";
     public static final String CURRENT_SHIFT = "CURRENT_SHIFT";
     public static final String NAVIGATION = "NAVIGATION";
+    public static final String FUEL_METER = "FUEL_METER";
 }
