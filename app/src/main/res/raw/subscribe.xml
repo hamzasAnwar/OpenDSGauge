@@ -9,6 +9,7 @@
     <Event Name="Subscribe">/root/thisVehicle/exterior/gearUnit/Properties/currentTransmission</Event>
     <Event Name="Subscribe">/root/thisVehicle/physicalAttributes/Properties/handbrake</Event>
     <Event Name="Subscribe">/root/thisVehicle/physicalAttributes/Properties/turnSignal</Event>
+    <Event Name="Subscribe">/root/thisVehicle/exterior/lights/Properties/headlights</Event>
     <Event Name="SetUpdateInterval">25</Event>
     <Event Name="EstablishConnection"/>
 </Message>

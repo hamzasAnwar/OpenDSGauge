@@ -1,13 +1,12 @@
 package de.dfki.opends.gauge.application;
 
-import android.content.Context;
-import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.PowerManager;
+
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -31,12 +30,12 @@ public class MainActivity extends AppCompatActivity {
     private ImageView handbrake;
     private ImageView leftTurn;
     private ImageView rightTurn;
+    private ImageView headlights;
     private ImageView navigation;
 
     private ImageSpeedometer fuelmeter;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
-    private PowerManager.WakeLock mWakeLock;
     private Map<String,View> viewMap;
 
 
@@ -55,7 +54,13 @@ public class MainActivity extends AppCompatActivity {
         setScreenAlwaysOnSetting();
         setDefaultNavigationSettings();
         setDefaultFuelSettings();
+        setDefaultHeadlights();
         initialzeTcpClient();
+    }
+
+    private void setDefaultHeadlights() {
+        headlights = findViewById(R.id.headlights);
+        viewMap.put(ViewMappings.HEAD_LIGHTS,headlights);
     }
 
     private void setDefaultFuelSettings() {
@@ -101,13 +106,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onDestroy() {
-        this.mWakeLock.release();
-        super.onDestroy();
-    }
-
-
     private void setDefaultSpeedometerSettings() {
         speedometer = findViewById(R.id.speedometer);
         speedometer.setSpeedTextSize(0);
@@ -146,8 +144,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setScreenAlwaysOnSetting() {
-        final PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        this.mWakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, TAG);
-        this.mWakeLock.acquire();
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 }

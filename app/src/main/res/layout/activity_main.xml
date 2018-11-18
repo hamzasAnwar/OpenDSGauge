@@ -9,6 +9,12 @@
     tools:context=".MainActivity">
 
 
+    <ImageView
+        android:id="@+id/navigation"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/nav" />
+
     <com.github.anastr.speedviewlib.ImageSpeedometer
         android:id="@+id/accelerometer"
         android:layout_width="400dp"
@@ -87,6 +93,14 @@
         android:textColor="#ff3a43"
         android:textSize="20dp" />
 
+    <ImageView
+        android:id="@+id/headlights"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.1"
+        android:layout_marginTop="550dp"
+        android:src="@drawable/lowbeam" />
 
     <ImageView
         android:id="@+id/handbrake"
@@ -118,25 +132,15 @@
         android:layout_below="@id/handbrake"
         android:src="@drawable/right" />
 
-    <ImageView
-        android:id="@+id/navigation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:src="@drawable/nav_cross_left" />
 
 
     <com.github.anastr.speedviewlib.ImageSpeedometer
         android:id="@+id/fuelgauge"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="350dp"
         android:visibility="visible"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/navigation"
-        android:layout_marginBottom="100dp"
         app:sv_image="@drawable/fuelgauge"
         app:sv_speedometerMode="TOP"
         app:sv_indicator="LineIndicator"

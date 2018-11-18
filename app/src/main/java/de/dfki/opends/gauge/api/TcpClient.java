@@ -36,6 +36,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import de.dfki.opends.gauge.application.R;
 import de.dfki.opends.gauge.util.Tags;
 import de.dfki.opends.gauge.util.ViewMappings;
 
@@ -54,6 +55,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private ImageView handbrake;
     private ImageView leftTurn;
     private ImageView rightTurn;
+    private ImageView headlights;
     private ImageView navigation;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
@@ -64,6 +66,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private Document document = null;
     private String previousSignal = "OFF";
     private String previousNavigation = "";
+    private String previousBeam = "";
     private String[] values;
     private Node[] node;
     private Animation animation;
@@ -81,6 +84,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.handbrake = (ImageView) viewMap.get(ViewMappings.HANDBRAKE);
         this.leftTurn = (ImageView) viewMap.get(ViewMappings.LEFT_TURN);
         this.rightTurn = (ImageView) viewMap.get(ViewMappings.RIGHT_TURN);
+        this.headlights = (ImageView) viewMap.get(ViewMappings.HEAD_LIGHTS);
         this.navigation = (ImageView) viewMap.get(ViewMappings.NAVIGATION);
 
 
@@ -183,6 +187,9 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
      * [3] = Handbrake
      * [4] = Turn signals
      * [5] = TransmissionMode
+     * [6] = Navigation Image
+     * [7] = Fuel Gauge
+     * [8] = Headlights
      */
     @Override
     protected void onProgressUpdate(String... values) {
@@ -214,19 +221,38 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         if(values[7]!=null){
             applyFuel(values[7]);
         }
+        if(values[8]!=null){
+            applyHeadlights(values[8]);
+        }
+
+    }
+
+    private void applyHeadlights(String value) {
+        if(!value.equals(previousBeam)){
+            if(value.equals("HighBeam")){
+                headlights.setImageResource(R.drawable.highbeam);
+                headlights.setAlpha((float)1);
+            }else if(value.equals("LowBeam")){
+                headlights.setImageResource(R.drawable.lowbeam);
+                headlights.setAlpha((float) 1);
+            }else{
+                headlights.setImageResource(R.drawable.lowbeam);
+                headlights.setAlpha((float)0.1);
+            }
+            previousBeam = value;
+        }
 
     }
 
     private void applyFuel(String value) {
         float fuel = Float.valueOf(value).intValue();
-        Log.d(TAG,fuel+"");
         fuelGauge.setSpeedAt(fuel);
     }
 
     private void applyNavigation(String value) {
         if(!value.equals(previousNavigation)){
             /** todo? **/
-            Log.d(TAG,value);
+            //Log.d(TAG,value);
             previousNavigation = value;
         }
     }
@@ -256,9 +282,9 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
                 rightTurn.clearAnimation();
                 leftTurn.clearAnimation();
             }
+            previousSignal=value;
         }
 
-        previousSignal=value;
 
     }
 
@@ -345,6 +371,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             node[5] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/gearUnit/Properties/currentTransmission/text()", document, XPathConstants.NODE);
             node[6] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/navigationImage/text()", document, XPathConstants.NODE);
             node[7] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/fueling/fuelType/tank/Properties/actualAmount/text()", document, XPathConstants.NODE);
+            node[8] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/lights/Properties/headlights/text()", document, XPathConstants.NODE);
 
             for(int i=0;i<node.length;i++){
                 if(node[i]!=null){
