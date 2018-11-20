@@ -69,7 +69,8 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private String previousBeam = "";
     private String[] values;
     private Node[] node;
-    private Animation animation;
+    private Animation turnAnimation;
+    private Animation navAnimation;
 
     public TcpClient(String address, int port, InputStream is, Map<String,View> viewMap) {
         this.dstAddress = address;
@@ -93,6 +94,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.xPath = XPathFactory.newInstance().newXPath();
         this.factory = DocumentBuilderFactory.newInstance();
         this.setupTurnSignalAnimation();
+        this.setupNavigationAnimation();
 
         try {
             builder = factory.newDocumentBuilder();
@@ -103,13 +105,20 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     }
 
     private void setupTurnSignalAnimation() {
-        animation = new AlphaAnimation(1,(float) 0.15);
-        animation.setDuration(400);
-        animation.setInterpolator(new LinearInterpolator());
-        animation.setRepeatCount(Animation.INFINITE);
-        animation.setRepeatMode(Animation.REVERSE);
+        turnAnimation = new AlphaAnimation(1,(float) 0.15);
+        turnAnimation.setDuration(400);
+        turnAnimation.setInterpolator(new LinearInterpolator());
+        turnAnimation.setRepeatCount(Animation.INFINITE);
+        turnAnimation.setRepeatMode(Animation.REVERSE);
     }
 
+    private void setupNavigationAnimation() {
+        navAnimation = new AlphaAnimation(1,(float) 0.15);
+        navAnimation.setDuration(1500);
+        navAnimation.setInterpolator(new LinearInterpolator());
+        navAnimation.setRepeatCount(Animation.INFINITE);
+        navAnimation.setRepeatMode(Animation.REVERSE);
+    }
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -251,8 +260,24 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
     private void applyNavigation(String value) {
         if(!value.equals(previousNavigation)){
-            /** todo? **/
-            //Log.d(TAG,value);
+            if(value.equals("cr")){
+                navigation.setImageResource(R.drawable.crossing_right);
+                navigation.setAlpha((float)1.0);
+                navigation.startAnimation(navAnimation);
+            }else if(value.equals("cl")){
+                navigation.setImageResource(R.drawable.crossing_left);
+                navigation.setAlpha((float)1.0);
+                navigation.startAnimation(navAnimation);
+            }else if(value.equals("cs")){
+                navigation.setImageResource(R.drawable.crossing_straight);
+                navigation.setAlpha((float)1.0);
+                navigation.startAnimation(navAnimation);
+            }else if(value.equals("")){
+                navigation.setImageResource(R.drawable.nav);
+                navigation.setAlpha((float)0.1);
+                navigation.clearAnimation();
+            }
+
             previousNavigation = value;
         }
     }
@@ -264,15 +289,15 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             if(value.equals("BOTH")){
                 rightTurn.setAlpha((float) 1.0);
                 leftTurn.setAlpha((float) 1.0);
-                leftTurn.startAnimation(animation);
-                rightTurn.startAnimation(animation);
+                leftTurn.startAnimation(turnAnimation);
+                rightTurn.startAnimation(turnAnimation);
             }else if(value.equals("LEFT")){
                 leftTurn.setAlpha((float) 1.0);
-                leftTurn.startAnimation(animation);
+                leftTurn.startAnimation(turnAnimation);
                 rightTurn.setAlpha((float) 0.15);
                 rightTurn.clearAnimation();
             }else if(value.equals("RIGHT") ){
-                rightTurn.startAnimation(animation);
+                rightTurn.startAnimation(turnAnimation);
                 rightTurn.setAlpha((float) 1.0);
                 leftTurn.setAlpha((float) 0.15);
                 leftTurn.clearAnimation();
