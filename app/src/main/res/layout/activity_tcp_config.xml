@@ -47,5 +47,13 @@
             android:layout_weight="0.25"
             android:onClick="connectButton"
             android:text="Connect" />
+        <Button
+            android:id="@+id/connectTab"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:onClick="connectTab"
+            android:text="Connect Tab" />
+
     </LinearLayout>
 </LinearLayout>

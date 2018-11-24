@@ -116,7 +116,25 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         navAnimation = new AlphaAnimation(1,(float) 0.15);
         navAnimation.setDuration(1500);
         navAnimation.setInterpolator(new LinearInterpolator());
-        navAnimation.setRepeatCount(Animation.INFINITE);
+        navAnimation.setRepeatCount(5);
+        navAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                navigation.setImageResource(R.drawable.nav);
+                navigation.setAlpha((float)0.1);
+                navigation.clearAnimation();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         navAnimation.setRepeatMode(Animation.REVERSE);
     }
 
@@ -260,6 +278,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
     private void applyNavigation(String value) {
         if(!value.equals(previousNavigation)){
+
             if(value.equals("cr")){
                 navigation.setImageResource(R.drawable.crossing_right);
                 navigation.setAlpha((float)1.0);
@@ -280,6 +299,9 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
             previousNavigation = value;
         }
+
+
+
     }
 
     private void applyTurnSignalSettings(String value) {
