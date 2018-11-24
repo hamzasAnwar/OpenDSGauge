@@ -262,6 +262,12 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             }else if(value.equals("LowBeam")){
                 headlights.setImageResource(R.drawable.lowbeam);
                 headlights.setAlpha((float) 1);
+            }else if(value.equals("RearFogBeam")){
+                headlights.setImageResource(R.drawable.rearfogbeam);
+                headlights.setAlpha((float) 1);
+            }else if(value.equals("FogBeam")){
+                headlights.setImageResource(R.drawable.fogbeam);
+                headlights.setAlpha((float) 1);
             }else{
                 headlights.setImageResource(R.drawable.lowbeam);
                 headlights.setAlpha((float)0.1);

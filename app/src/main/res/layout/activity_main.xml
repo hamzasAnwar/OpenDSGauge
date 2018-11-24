@@ -152,4 +152,84 @@
         app:sv_unitTextColor="#fff" />
 
 
+    <ImageView
+        android:id="@+id/battery"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.1"
+        android:layout_marginTop="450dp"
+        android:src="@drawable/battery" />
+
+
+    <ImageView
+        android:id="@+id/checkengine"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.1"
+        android:layout_marginTop="450dp"
+        android:src="@drawable/checkengine" />
+
+
+    <ImageView
+        android:id="@+id/cruisecontrol"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.1"
+        android:layout_marginTop="450dp"
+        android:src="@drawable/cruisecontrol" />
+
+
+
+    <ImageView
+        android:id="@+id/frostwarning"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.1"
+        android:layout_marginTop="450dp"
+        android:src="@drawable/frostwarning" />
+
+
+    <ImageView
+        android:id="@+id/fuel"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.1"
+        android:layout_marginTop="450dp"
+        android:src="@drawable/fuel" />
+
+
+    <ImageView
+        android:id="@+id/oilpressure"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.1"
+        android:layout_marginTop="450dp"
+        android:src="@drawable/oilpressurelow" />
+
+
+    <ImageView
+        android:id="@+id/seatbelt"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.1"
+        android:layout_marginTop="450dp"
+        android:src="@drawable/seatbelt" />
+
+
+    <ImageView
+        android:id="@+id/tyrepressure"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:alpha="0.1"
+        android:layout_marginTop="450dp"
+        android:src="@drawable/tyrepressurelow" />
+
 </RelativeLayout>
