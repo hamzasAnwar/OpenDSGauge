@@ -94,6 +94,14 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.leftTurn = (ImageView) viewMap.get(ViewMappings.LEFT_TURN);
         this.rightTurn = (ImageView) viewMap.get(ViewMappings.RIGHT_TURN);
         this.headlights = (ImageView) viewMap.get(ViewMappings.HEAD_LIGHTS);
+        this.frostLights = (ImageView) viewMap.get(ViewMappings.FROST_LIGHTS);
+        this.fuelLights = (ImageView) viewMap.get(ViewMappings.FUEL_LIGHTS);
+        this.seatbeltLights = (ImageView) viewMap.get(ViewMappings.SEAT_BELT_LIGHTS);
+        this.batteryLights = (ImageView) viewMap.get(ViewMappings.BATTERY_LIGHTS);
+        this.tyrePressureLights = (ImageView) viewMap.get(ViewMappings.TYRE_PRESSURE_LIGHTS);
+        this.oilPressureLights = (ImageView) viewMap.get(ViewMappings.OIL_LIGHTS);
+        this.checkLights = (ImageView) viewMap.get(ViewMappings.CHECK_ENGINE_LIGHTS);
+        this.cruiseControlLights = (ImageView) viewMap.get(ViewMappings.CRUISE_CONTROL_LIGHTS);
         this.navigation = (ImageView) viewMap.get(ViewMappings.NAVIGATION);
 
 
@@ -264,50 +272,81 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             applyFrostLights(values[9]);
         }
         if(values[10]!=null){
-            applyFuelLights(values[10]);
+            applyCruiseControlLights(values[10]);
         }
         if(values[11]!=null){
-            applyCruiseControlLights(values[11]);
+            applyCheckLights(values[11]);
         }
         if(values[12]!=null){
-            applyCheckLights(values[12]);
+            applyOilLights(values[12]);
         }
         if(values[13]!=null){
-            applyOilLights(values[13]);
+            applyBatteryLights(values[13]);
         }
         if(values[14]!=null){
-            applyBatteryLights(values[14]);
+            applyTyrePressureLights(values[14]);
         }
         if(values[15]!=null){
-            applyTyrePressureLights(values[15]);
-        }
-        if(values[16]!=null){
-            applySeatBeltLights(values[16]);
+            applySeatBeltLights(values[15]);
         }
     }
 
     private void applyFrostLights(String value) {
-    }
+        if(value.equals("true")){
+            frostLights.setAlpha((float)1);
+        }else{
+            frostLights.setAlpha((float)0.1);
+        }
 
-    private void applyFuelLights(String value) {
     }
 
     private void applyCruiseControlLights(String value) {
+
+        if(value.equals("true")){
+            cruiseControlLights.setAlpha((float)1);
+        }else{
+            cruiseControlLights.setAlpha((float)0.1);
+        }
     }
 
     private void applyOilLights(String value) {
+        if(value.equals("true")){
+            oilPressureLights.setAlpha((float)1);
+        }else{
+            oilPressureLights.setAlpha((float)0.1);
+        }
     }
 
     private void applyCheckLights(String value) {
+        if(value.equals("true")){
+            checkLights.setAlpha((float)1);
+        }else{
+            checkLights.setAlpha((float)0.1);
+        }
     }
 
     private void applyBatteryLights(String value) {
+        if(value.equals("true")){
+            batteryLights.setAlpha((float)1);
+        }else{
+            batteryLights.setAlpha((float)0.1);
+        }
     }
 
     private void applyTyrePressureLights(String value) {
+        if(value.equals("true")){
+            tyrePressureLights.setAlpha((float)1);
+        }else{
+            tyrePressureLights.setAlpha((float)0.1);
+        }
     }
 
     private void applySeatBeltLights(String value) {
+        if(value.equals("true")){
+            seatbeltLights.setAlpha((float)1);
+        }else{
+            seatbeltLights.setAlpha((float)0.1);
+        }
     }
 
     private void applyHeadlights(String value) {
@@ -336,6 +375,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private void applyFuel(String value) {
         float fuel = Float.valueOf(value).intValue();
         fuelGauge.setSpeedAt(fuel);
+        /*TODO ADD FUEL LIGHT FUNCTIONS*/
     }
 
     private void applyNavigation(String value) {
@@ -481,6 +521,13 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             node[6] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/navigationImage/text()", document, XPathConstants.NODE);
             node[7] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/fueling/fuelType/tank/Properties/actualAmount/text()", document, XPathConstants.NODE);
             node[8] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/lights/Properties/headlights/text()", document, XPathConstants.NODE);
+            node[9] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/frostLights/text()", document, XPathConstants.NODE);
+            node[10] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/cruiseControlLights/text()", document, XPathConstants.NODE);
+            node[11] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/checkLights/text()", document, XPathConstants.NODE);
+            node[12] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/oilPressureLights/text()", document, XPathConstants.NODE);
+            node[13] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/batteryLights/text()", document, XPathConstants.NODE);
+            node[14] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/tyrePressureLights/text()", document, XPathConstants.NODE);
+            node[15] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/seatbeltLights/text()", document, XPathConstants.NODE);
 
             for(int i=0;i<node.length;i++){
                 if(node[i]!=null){
