@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.anastr.speedviewlib.ImageSpeedometer;
@@ -72,7 +73,23 @@ public class MainActivity extends AppCompatActivity {
         setDefaultCruiseLights();
         setDefaultFrostLights();
         setDefaultTyrePressureLights();
+        setRPMRight();
         initialzeTcpClient();
+
+    }
+
+    private void setRPMRight(){
+        RelativeLayout.LayoutParams accParam = (RelativeLayout.LayoutParams)accelerometer.getLayoutParams();
+
+        accParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        accParam.addRule(RelativeLayout.ALIGN_PARENT_END);
+        accelerometer.setLayoutParams(accParam); //causes layout update
+
+        RelativeLayout.LayoutParams speedoParam = (RelativeLayout.LayoutParams)speedometer.getLayoutParams();
+        speedoParam.removeRule(RelativeLayout.ALIGN_PARENT_END);
+        speedoParam.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        speedometer.setLayoutParams(speedoParam);
+
     }
 
     private void setDefaultBatteryLights() {
