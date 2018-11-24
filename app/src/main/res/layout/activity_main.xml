@@ -158,7 +158,8 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:alpha="0.1"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="550dp"
+        android:layout_toRightOf="@id/checkengine"
         android:src="@drawable/battery" />
 
 
@@ -168,7 +169,8 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:alpha="0.1"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="550dp"
+        android:layout_toRightOf="@id/cruisecontrol"
         android:src="@drawable/checkengine" />
 
 
@@ -178,7 +180,8 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:alpha="0.1"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="550dp"
+        android:layout_toRightOf="@id/right"
         android:src="@drawable/cruisecontrol" />
 
 
@@ -189,7 +192,7 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:alpha="0.1"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="600dp"
         android:src="@drawable/frostwarning" />
 
 
@@ -198,8 +201,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
-        android:alpha="0.1"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="370dp"
         android:src="@drawable/fuel" />
 
 
@@ -209,7 +211,9 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:alpha="0.1"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="550dp"
+
+        android:layout_toLeftOf="@id/seatbelt"
         android:src="@drawable/oilpressurelow" />
 
 
@@ -219,7 +223,8 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:alpha="0.1"
-        android:layout_marginTop="450dp"
+        android:layout_marginTop="550dp"
+        android:layout_toLeftOf="@id/tyrepressure"
         android:src="@drawable/seatbelt" />
 
 
@@ -229,7 +234,8 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:alpha="0.1"
-        android:layout_marginTop="450dp"
+        android:layout_toLeftOf="@id/left"
+        android:layout_marginTop="550dp"
         android:src="@drawable/tyrepressurelow" />
 
 </RelativeLayout>

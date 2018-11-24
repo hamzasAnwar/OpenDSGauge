@@ -1,15 +1,23 @@
 package de.dfki.opends.gauge.util;
 
-public class ViewMappings {
-    public static final String LEFT_TURN = "LEFT_TURN";
-    public static final String RIGHT_TURN = "RIGHT_TURN";
-    public static final String HANDBRAKE = "HANDBRAKE";
-    public static final String SPEEDOMETER = "SPEEDOMETER";
-    public static final String SPEEDOMETER_DIGITAL = "SPEEDOMETER_DIGITAL";
-    public static final String RPM_METER = "RPM_METER";
-    public static final String CURRENT_GEAR = "CURRENT_GEAR";
-    public static final String CURRENT_SHIFT = "CURRENT_SHIFT";
-    public static final String NAVIGATION = "NAVIGATION";
-    public static final String FUEL_METER = "FUEL_METER";
-    public static final String HEAD_LIGHTS = "HEAD_LIGHTS";
+public enum ViewMappings {
+    LEFT_TURN,
+    RIGHT_TURN,
+    HANDBRAKE,
+    SPEEDOMETER,
+    SPEEDOMETER_DIGITAL,
+    RPM_METER,
+    CURRENT_GEAR,
+    CURRENT_SHIFT,
+    NAVIGATION,
+    FUEL_METER,
+    HEAD_LIGHTS,
+    FUEL_LIGHTS,
+    TYRE_PRESSURE_LIGHTS,
+    CRUISE_CONTROL_LIGHTS,
+    FROST_LIGHTS,
+    CHECK_ENGINE_LIGHTS,
+    OIL_LIGHTS,
+    SEAT_BELT_LIGHTS,
+    BATTERY_LIGHTS;
 }

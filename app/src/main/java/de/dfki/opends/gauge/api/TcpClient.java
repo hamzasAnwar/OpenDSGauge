@@ -57,6 +57,14 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private ImageView rightTurn;
     private ImageView headlights;
     private ImageView navigation;
+    private ImageView fuelLights;
+    private ImageView frostLights;
+    private ImageView seatbeltLights;
+    private ImageView oilPressureLights;
+    private ImageView tyrePressureLights;
+    private ImageView cruiseControlLights;
+    private ImageView batteryLights;
+    private ImageView checkLights;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
     private ImageSpeedometer fuelGauge;
@@ -72,7 +80,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private Animation turnAnimation;
     private Animation navAnimation;
 
-    public TcpClient(String address, int port, InputStream is, Map<String,View> viewMap) {
+    public TcpClient(String address, int port, InputStream is, Map<ViewMappings,View> viewMap) {
         this.dstAddress = address;
         this.dstPort = port;
         this.request = subscribeFromFile(is);
@@ -252,6 +260,54 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             applyHeadlights(values[8]);
         }
 
+        if(values[9]!=null){
+            applyFrostLights(values[9]);
+        }
+        if(values[10]!=null){
+            applyFuelLights(values[10]);
+        }
+        if(values[11]!=null){
+            applyCruiseControlLights(values[11]);
+        }
+        if(values[12]!=null){
+            applyCheckLights(values[12]);
+        }
+        if(values[13]!=null){
+            applyOilLights(values[13]);
+        }
+        if(values[14]!=null){
+            applyBatteryLights(values[14]);
+        }
+        if(values[15]!=null){
+            applyTyrePressureLights(values[15]);
+        }
+        if(values[16]!=null){
+            applySeatBeltLights(values[16]);
+        }
+    }
+
+    private void applyFrostLights(String value) {
+    }
+
+    private void applyFuelLights(String value) {
+    }
+
+    private void applyCruiseControlLights(String value) {
+    }
+
+    private void applyOilLights(String value) {
+    }
+
+    private void applyCheckLights(String value) {
+    }
+
+    private void applyBatteryLights(String value) {
+    }
+
+    private void applyTyrePressureLights(String value) {
+    }
+
+    private void applySeatBeltLights(String value) {
     }
 
     private void applyHeadlights(String value) {

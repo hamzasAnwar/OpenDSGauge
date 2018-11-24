@@ -31,12 +31,22 @@ public class MainActivity extends AppCompatActivity {
     private ImageView leftTurn;
     private ImageView rightTurn;
     private ImageView headlights;
+    private ImageView fuelLight;
+    private ImageView cruiseLight;
+    private ImageView checkLight;
+    private ImageView seatbeltLight;
+    private ImageView frostLight;
+    private ImageView tyrepressureLight;
+    private ImageView batteryLight;
+    private ImageView oilLight;
     private ImageView navigation;
+
+
 
     private ImageSpeedometer fuelmeter;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
-    private Map<String,View> viewMap;
+    private Map<ViewMappings,View> viewMap;
 
 
     @Override
@@ -55,8 +65,51 @@ public class MainActivity extends AppCompatActivity {
         setDefaultNavigationSettings();
         setDefaultFuelSettings();
         setDefaultHeadlights();
+        setDefaultBatteryLights();
+        setDefaultSeatbeltLights();
+        setDefaultCheckEngineLights();
+        setDefaultOilLights();
+        setDefaultCruiseLights();
+        setDefaultFrostLights();
+        setDefaultTyrePressureLights();
         initialzeTcpClient();
     }
+
+    private void setDefaultBatteryLights() {
+        batteryLight = findViewById(R.id.battery);
+        viewMap.put(ViewMappings.BATTERY_LIGHTS,batteryLight);
+    }
+
+    private void setDefaultOilLights() {
+        oilLight = findViewById(R.id.oilpressure);
+        viewMap.put(ViewMappings.OIL_LIGHTS,oilLight);
+    }
+
+    private void setDefaultSeatbeltLights() {
+        seatbeltLight = findViewById(R.id.seatbelt);
+        viewMap.put(ViewMappings.SEAT_BELT_LIGHTS,seatbeltLight);
+    }
+
+    private void setDefaultCheckEngineLights() {
+        checkLight = findViewById(R.id.checkengine);
+        viewMap.put(ViewMappings.CHECK_ENGINE_LIGHTS,checkLight);
+    }
+
+    private void setDefaultFrostLights() {
+        frostLight = findViewById(R.id.frostwarning);
+        viewMap.put(ViewMappings.FROST_LIGHTS,frostLight);
+    }
+
+    private void setDefaultCruiseLights() {
+        cruiseLight = findViewById(R.id.cruisecontrol);
+        viewMap.put(ViewMappings.CRUISE_CONTROL_LIGHTS,cruiseLight);
+    }
+
+    private void setDefaultTyrePressureLights() {
+        tyrepressureLight = findViewById(R.id.tyrepressure);
+        viewMap.put(ViewMappings.TYRE_PRESSURE_LIGHTS,tyrepressureLight);
+    }
+
 
     private void setDefaultHeadlights() {
         headlights = findViewById(R.id.headlights);
@@ -70,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
         fuelmeter.setUnitTextSize(0);
         fuelmeter.setWithTremble(true);
         viewMap.put(ViewMappings.FUEL_METER,fuelmeter);
+
+
+        fuelLight = findViewById(R.id.fuel);
+        viewMap.put(ViewMappings.FUEL_LIGHTS,fuelLight);
 
     }
 
