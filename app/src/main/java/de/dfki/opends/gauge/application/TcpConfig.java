@@ -33,5 +33,12 @@ public class TcpConfig extends AppCompatActivity {
         
     }
 
+    public void connectTab(View view) {
 
+        Intent gauge = new Intent(this, MainActivity.class);
+        gauge.putExtra(Tags.IP, "172.16.49.209");
+        gauge.putExtra(Tags.PORT, editTextPort.getText().toString());
+        this.startActivity(gauge);
+
+    }
 }
