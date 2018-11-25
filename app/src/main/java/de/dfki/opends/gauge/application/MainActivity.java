@@ -198,9 +198,9 @@ public class MainActivity extends AppCompatActivity {
         speedometer = findViewById(R.id.speedometer);
         speedometer.setSpeedTextSize(0);
         speedometer.setUnitTextSize(0);
-        speedometer.setMaxSpeed(220);
+        speedometer.setMinMaxSpeed(0,220);
 
-        speedometer.setWithTremble(true);
+        speedometer.setWithTremble(false);
 
         speedDigital = findViewById(R.id.digitalSpeed);
         speedDigital.setTypeface(Typeface.createFromAsset(getAssets(), "digital-counter-7.regular.ttf"));
