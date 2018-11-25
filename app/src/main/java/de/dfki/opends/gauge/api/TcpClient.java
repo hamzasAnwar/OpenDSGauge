@@ -375,7 +375,17 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private void applyFuel(String value) {
         float fuel = Float.valueOf(value).intValue();
         fuelGauge.setSpeedAt(fuel);
-        /*TODO ADD FUEL LIGHT FUNCTIONS*/
+
+        if(fuel<10){
+            fuelLights.setImageResource(R.drawable.lowfuelred);
+        }else if(fuel<20){
+            fuelLights.setImageResource(R.drawable.lowfuel);
+        }else{
+            fuelLights.setImageResource(R.drawable.fuel);
+        }
+
+
+
     }
 
     private void applyNavigation(String value) {
