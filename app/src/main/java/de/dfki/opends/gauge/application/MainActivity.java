@@ -138,10 +138,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setDefaultFuelSettings() {
         fuelmeter = findViewById(R.id.fuelgauge);
-        fuelmeter.setMinMaxSpeed(15,86);
+        fuelmeter.setMinMaxSpeed(0,60);
+        fuelmeter.setStartDegree(180+15);
+        fuelmeter.setEndDegree(360-15);
         fuelmeter.setSpeedTextSize(0);
         fuelmeter.setUnitTextSize(0);
-        fuelmeter.setWithTremble(true);
+        fuelmeter.setWithTremble(false);
         viewMap.put(ViewMappings.FUEL_METER,fuelmeter);
 
 

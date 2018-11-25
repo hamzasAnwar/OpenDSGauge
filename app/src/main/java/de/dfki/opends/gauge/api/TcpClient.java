@@ -48,7 +48,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private String dstAddress;
     private int dstPort;
     private byte[] request = null;
-    private Socket socket;
+    public Socket socket;
     private TextView speedDigital;
     private TextView gearDigital;
     private TextView currentGearMode;
@@ -196,7 +196,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
                         publishProgress(getContent(loadXMLFromString(messageValue)));
                     }
 
-                } catch (Exception e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -487,7 +487,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
             msg = (xml).getBytes("UTF-8");
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -539,6 +539,17 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             e.printStackTrace();
         }
         return values;
+    }
+
+    public void closeConnection(){
+        try {
+            if(socket!=null){
+
+                socket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
