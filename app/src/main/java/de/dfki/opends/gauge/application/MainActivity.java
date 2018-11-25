@@ -232,4 +232,11 @@ public class MainActivity extends AppCompatActivity {
     private void setScreenAlwaysOnSetting() {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
+
+    @Override
+    protected void onPause() {
+        tcpClient.closeConnection();
+        finish();
+        super.onPause();
+    }
 }

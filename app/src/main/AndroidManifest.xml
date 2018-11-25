@@ -19,6 +19,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:clearTaskOnLaunch="true"
             android:screenOrientation="landscape"
             android:configChanges="keyboardHidden|orientation"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"></activity>

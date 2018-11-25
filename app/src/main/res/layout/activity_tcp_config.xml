@@ -37,7 +37,7 @@
             android:layout_weight="0.10"
             android:ems="10"
             android:hint="@string/enter_url"
-            android:inputType="textUri"
+            android:inputType="number"
             android:text="@string/_123"
             android:importantForAutofill="no" />
 

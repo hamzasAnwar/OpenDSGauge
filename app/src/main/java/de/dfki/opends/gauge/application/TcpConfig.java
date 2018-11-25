@@ -33,7 +33,6 @@ public class TcpConfig extends AppCompatActivity {
         Intent gauge = new Intent(this, MainActivity.class);
         gauge.putExtra(Tags.IP, editTextIp.getText().toString());
         gauge.putExtra(Tags.PORT, editTextPort.getText().toString());
-        Log.d(TAG,alignRight.isChecked()+"");
         gauge.putExtra(Tags.RPM_RIGHT,String.valueOf(alignRight.isChecked()));
         this.startActivity(gauge);
         
