@@ -1,6 +1,7 @@
 package de.dfki.opends.gauge.application;
 
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.anastr.speedviewlib.ImageSpeedometer;
 
@@ -73,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
         setDefaultCruiseLights();
         setDefaultFrostLights();
         setDefaultTyrePressureLights();
-        setRPMRight();
         initialzeTcpClient();
 
     }
@@ -86,8 +87,10 @@ public class MainActivity extends AppCompatActivity {
         accelerometer.setLayoutParams(accParam); //causes layout update
 
         RelativeLayout.LayoutParams speedoParam = (RelativeLayout.LayoutParams)speedometer.getLayoutParams();
-        speedoParam.removeRule(RelativeLayout.ALIGN_PARENT_END);
-        speedoParam.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            speedoParam.removeRule(RelativeLayout.ALIGN_PARENT_END);
+            speedoParam.removeRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        }
         speedometer.setLayoutParams(speedoParam);
 
     }
@@ -171,14 +174,23 @@ public class MainActivity extends AppCompatActivity {
         String ip = getIntent().getStringExtra(Tags.IP);
         int port = Integer.parseInt(getIntent().getStringExtra(Tags.PORT));
 
+        boolean rpmRight = Boolean.parseBoolean(getIntent().getStringExtra(Tags.RPM_RIGHT));
+        if(rpmRight){
+            setRPMRight();
+        }
+
         try {
             tcpClient = new TcpClient(ip, port, this.getResources().openRawResource(R.raw.subscribe), viewMap);
             tcpClient.execute();
 
+
+
         } catch (Exception e) {
             Log.d(TAG, e.getLocalizedMessage());
+            Toast.makeText(this ,"Error IP/Port Invalid!",Toast.LENGTH_LONG);
         }
     }
+
 
     private void setDefaultSpeedometerSettings() {
         speedometer = findViewById(R.id.speedometer);

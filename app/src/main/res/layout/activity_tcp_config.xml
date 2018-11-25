@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TcpConfig">
-
+    tools:context=".TcpConfig"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -17,8 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:gravity="center"
-            android:text="URL:"
-            android:textSize="20dp" />
+            android:text="@string/url"
+            android:textSize="20sp" />
 
         <EditText
         android:id="@+id/inputURL"
@@ -26,9 +26,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.40"
         android:ems="10"
-        android:hint="Enter URL"
+        android:hint="@string/enter_url"
         android:inputType="textUri"
-        android:text="10.0.2.2" />
+        android:text="@string/_10_0_2_2" />
 
         <EditText
             android:id="@+id/inputPort"
@@ -36,9 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.10"
             android:ems="10"
-            android:hint="Enter URL"
+            android:hint="@string/enter_url"
             android:inputType="textUri"
-            android:text="123" />
+            android:text="@string/_123"
+            android:importantForAutofill="no" />
 
         <Button
             android:id="@+id/buttonConnect"
@@ -46,14 +47,29 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:onClick="connectButton"
-            android:text="Connect" />
+            android:text="@string/connect" />
+
         <Button
             android:id="@+id/connectTab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:onClick="connectTab"
-            android:text="Connect Tab" />
-
+            android:text="@string/connect_tab" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Switch
+            android:layout_marginLeft="20dp"
+            android:id="@+id/alignRight"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:text="@string/rpm_align_right"
+            android:layout_marginStart="20dp" />
+    </LinearLayout>
+
 </LinearLayout>

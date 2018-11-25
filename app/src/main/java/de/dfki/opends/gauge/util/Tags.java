@@ -8,5 +8,5 @@ public class Tags {
 
     public static final String IP = "ip";
     public static final String PORT = "port";
-
+    public static final String RPM_RIGHT = "rpmRight";
 }

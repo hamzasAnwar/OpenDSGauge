@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">OpenDSGauge</string>
     <string name="tag_kmh">KM/H</string>
+    <string name="rpm_align_right">RPM Align Right:</string>
+    <string name="url">URL:</string>
+    <string name="_10_0_2_2">10.0.2.2</string>
+    <string name="enter_url">Enter URL</string>
+    <string name="connect">Connect</string>
+    <string name="_123">123</string>
+    <string name="connect_tab">Connect Tab</string>
 </resources>
