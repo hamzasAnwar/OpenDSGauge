@@ -214,8 +214,8 @@ public class MainActivity extends AppCompatActivity {
         accelerometer = findViewById(R.id.accelerometer);
         accelerometer.setSpeedTextSize(0);
         accelerometer.setUnitTextSize(0);
-        accelerometer.setMinMaxSpeed(0, 6000);
-        accelerometer.setWithTremble(true);
+        accelerometer.setMinMaxSpeed(0, 7000);
+        accelerometer.setWithTremble(false);
         viewMap.put(ViewMappings.RPM_METER,accelerometer);
     }
 

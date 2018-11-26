@@ -79,6 +79,8 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private Node[] node;
     private Animation turnAnimation;
     private Animation navAnimation;
+    private Animation fuelAnimation;
+    private Animation seatbeltAnimation;
 
     public TcpClient(String address, int port, InputStream is, Map<ViewMappings,View> viewMap) {
         this.dstAddress = address;
@@ -111,6 +113,8 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.factory = DocumentBuilderFactory.newInstance();
         this.setupTurnSignalAnimation();
         this.setupNavigationAnimation();
+        this.setupFuelAnimation();
+        this.setupSeatbeltAnimation();
 
         try {
             builder = factory.newDocumentBuilder();
@@ -120,12 +124,32 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
     }
 
-    private void setupTurnSignalAnimation() {
-        turnAnimation = new AlphaAnimation(1,(float) 0.15);
-        turnAnimation.setDuration(400);
-        turnAnimation.setInterpolator(new LinearInterpolator());
-        turnAnimation.setRepeatCount(Animation.INFINITE);
-        turnAnimation.setRepeatMode(Animation.REVERSE);
+    private Animation createNewDefaultAnimation(){
+        Animation animation = new AlphaAnimation(1,(float) 0.15);
+        animation.setDuration(1000);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE);
+        animation.setRepeatMode(Animation.REVERSE);
+        return animation;
+    }
+    private Animation setupFuelAnimation() {
+        if(fuelAnimation==null){
+            fuelAnimation = createNewDefaultAnimation();
+        }
+        return fuelAnimation;
+    }
+    private Animation setupSeatbeltAnimation() {
+        if(seatbeltAnimation==null){
+            seatbeltAnimation = createNewDefaultAnimation();
+        }
+        return seatbeltAnimation;
+    }
+    private Animation setupTurnSignalAnimation() {
+      if(turnAnimation==null){
+            turnAnimation = createNewDefaultAnimation();
+            turnAnimation.setDuration(400);
+      }
+      return turnAnimation;
     }
 
     private void setupNavigationAnimation() {
@@ -344,8 +368,10 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private void applySeatBeltLights(String value) {
         if(value.equals("true")){
             seatbeltLights.setAlpha((float)1);
+            seatbeltLights.setAnimation(seatbeltAnimation);
         }else{
             seatbeltLights.setAlpha((float)0.1);
+            seatbeltLights.clearAnimation();
         }
     }
 
@@ -378,8 +404,10 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
         if(fuel<10){
             fuelLights.setImageResource(R.drawable.lowfuelred);
+            fuelLights.setAnimation(fuelAnimation);
         }else if(fuel<20){
             fuelLights.setImageResource(R.drawable.lowfuel);
+            fuelLights.clearAnimation();
         }else{
             fuelLights.setImageResource(R.drawable.fuel);
         }
@@ -450,7 +478,10 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private void applyRpmSettings(String value) {
         Float rpm = Float.valueOf(value);
         //Normalize RPM
-        rpm = (rpm - 750);
+        rpm-=560;
+        if(rpm==140){
+            rpm=(float)5;
+        }
         accelerometer.setSpeedAt(rpm);
     }
 
