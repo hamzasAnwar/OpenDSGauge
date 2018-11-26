@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView oilLight;
     private ImageView navigation;
     private ImageView gearShift;
+    private ImageView speedLimitSign;
+    private TextView speedLimitText;
 
 
 
@@ -62,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         //configure default settings
         setDefaultGearSettings();
+        setDefaultSpeedLimitSettings();
         setDefaultAccelerometerSettings();
         setDefaultSpeedometerSettings();
         setDefaultMileageSettings();
@@ -79,6 +82,19 @@ public class MainActivity extends AppCompatActivity {
         setDefaultFrostLights();
         setDefaultTyrePressureLights();
         initialzeTcpClient();
+
+    }
+
+    private void setDefaultSpeedLimitSettings() {
+        speedLimitSign = findViewById(R.id.speedLimitSign);
+        speedLimitText = findViewById(R.id.speedLimitText);
+
+        speedLimitSign.setVisibility(View.INVISIBLE);
+        speedLimitText.setVisibility(View.INVISIBLE);
+
+        viewMap.put(ViewMappings.SPEED_LIMIT_SIGN,speedLimitSign);
+        viewMap.put(ViewMappings.SPEED_LIMIT_TEXT,speedLimitText);
+
 
     }
 

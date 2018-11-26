@@ -48,7 +48,9 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private String dstAddress;
     private int dstPort;
     private byte[] request = null;
-    public Socket socket;
+    private Socket socket;
+    private TextView speedLimitText;
+    private ImageView speedLimitSign;
     private TextView speedDigital;
     private TextView mileageDigital;
     private TextView gearDigital;
@@ -109,6 +111,8 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.navigation = (ImageView) viewMap.get(ViewMappings.NAVIGATION);
         this.mileageDigital = (TextView) viewMap.get(ViewMappings.MILEAGE);
         this.gearShift = (ImageView) viewMap.get(ViewMappings.GEAR_SHIFT);
+        this.speedLimitSign = (ImageView) viewMap.get(ViewMappings.SPEED_LIMIT_SIGN);
+        this.speedLimitText = (TextView) viewMap.get(ViewMappings.SPEED_LIMIT_TEXT);
 
         this.node = new Node[viewMap.size()];
         this.values = new String[viewMap.size()];
@@ -320,6 +324,21 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         }
         if(values[17]!=null){
             applyGearShiftSettings(values[17]);
+        }
+        if(values[18]!=null){
+            applySpeedLimitSettings(values[18]);
+        }
+    }
+
+    private void applySpeedLimitSettings(String value) {
+        Log.d(TAG,value);
+        if(!speedLimitText.equals("")){
+            speedLimitText.setText(value);
+            speedLimitSign.setVisibility(View.VISIBLE);
+            speedLimitText.setVisibility(View.VISIBLE);
+        }else{
+            speedLimitText.setVisibility(View.INVISIBLE);
+            speedLimitSign.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -631,6 +650,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             node[15] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/seatbeltLights/text()", document, XPathConstants.NODE);
             node[16] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/mileage/text()", document, XPathConstants.NODE);
             node[17] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/gearUnit/Properties/shift/text()", document, XPathConstants.NODE);
+            node[18] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/speedLimit/text()", document, XPathConstants.NODE);
 
             for(int i=0;i<node.length;i++){
                 if(node[i]!=null){
