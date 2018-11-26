@@ -66,6 +66,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private ImageView cruiseControlLights;
     private ImageView batteryLights;
     private ImageView checkLights;
+    private ImageView gearShift;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
     private ImageSpeedometer fuelGauge;
@@ -107,7 +108,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.cruiseControlLights = (ImageView) viewMap.get(ViewMappings.CRUISE_CONTROL_LIGHTS);
         this.navigation = (ImageView) viewMap.get(ViewMappings.NAVIGATION);
         this.mileageDigital = (TextView) viewMap.get(ViewMappings.MILEAGE);
-
+        this.gearShift = (ImageView) viewMap.get(ViewMappings.GEAR_SHIFT);
 
         this.node = new Node[viewMap.size()];
         this.values = new String[viewMap.size()];
@@ -317,6 +318,21 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         }
         if(values[16]!=null){
             applyMileageSettings(values[16]);
+        }
+        if(values[17]!=null){
+            applyGearShiftSettings(values[17]);
+        }
+    }
+
+    private void applyGearShiftSettings(String value) {
+        if(value.equals("UP")){
+            gearShift.setAlpha((float)1);
+            gearShift.setImageResource(R.drawable.shiftup);
+        }else if(value.equals("DOWN")){
+            gearShift.setAlpha((float)1);
+            gearShift.setImageResource(R.drawable.shiftdown);
+        }else{
+            gearShift.setAlpha((float)0);
         }
     }
 
@@ -579,6 +595,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             node[14] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/tyrePressureLights/text()", document, XPathConstants.NODE);
             node[15] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/seatbeltLights/text()", document, XPathConstants.NODE);
             node[16] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/mileage/text()", document, XPathConstants.NODE);
+            node[17] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/gearUnit/Properties/shift/text()", document, XPathConstants.NODE);
 
             for(int i=0;i<node.length;i++){
                 if(node[i]!=null){

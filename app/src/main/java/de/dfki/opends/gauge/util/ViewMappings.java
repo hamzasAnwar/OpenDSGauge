@@ -20,5 +20,6 @@ public enum ViewMappings {
     OIL_LIGHTS,
     SEAT_BELT_LIGHTS,
     BATTERY_LIGHTS,
-    MILEAGE;
+    MILEAGE,
+    GEAR_SHIFT;
 }

@@ -8,6 +8,7 @@
     <Event Name="Subscribe">/root/thisVehicle/exterior/fueling/fuelType/tank/Properties/actualAmount</Event>
     <Event Name="Subscribe">/root/thisVehicle/exterior/gearUnit/Properties/currentGear</Event>
     <Event Name="Subscribe">/root/thisVehicle/exterior/gearUnit/Properties/currentTransmission</Event>
+    <Event Name="Subscribe">/root/thisVehicle/exterior/gearUnit/Properties/shift</Event>
     <Event Name="Subscribe">/root/thisVehicle/physicalAttributes/Properties/handbrake</Event>
     <Event Name="Subscribe">/root/thisVehicle/physicalAttributes/Properties/turnSignal</Event>
     <Event Name="Subscribe">/root/thisVehicle/exterior/lights/Properties/headlights</Event>

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView batteryLight;
     private ImageView oilLight;
     private ImageView navigation;
+    private ImageView gearShift;
 
 
 
@@ -234,8 +235,11 @@ public class MainActivity extends AppCompatActivity {
 
         currentGearMode = findViewById(R.id.gearMode);
 
+        gearShift = findViewById(R.id.shift);
+
         viewMap.put(ViewMappings.CURRENT_GEAR,currentGearMode);
         viewMap.put(ViewMappings.CURRENT_SHIFT,gearDigital);
+        viewMap.put(ViewMappings.GEAR_SHIFT,gearShift);
 
     }
 
