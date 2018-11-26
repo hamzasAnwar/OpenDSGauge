@@ -168,8 +168,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                navigation.setImageResource(R.drawable.nav);
-                navigation.setAlpha((float)0.1);
+                navigation.setVisibility(View.INVISIBLE);
                 navigation.clearAnimation();
             }
 
@@ -445,22 +444,57 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private void applyNavigation(String value) {
         if(!value.equals(previousNavigation)){
 
-            if(value.equals("cr")){
-                navigation.setImageResource(R.drawable.crossing_right);
-                navigation.setAlpha((float)1.0);
+            if(value.equals("zero")){
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setImageResource(R.drawable.zero);
                 navigation.startAnimation(navAnimation);
-            }else if(value.equals("cl")){
-                navigation.setImageResource(R.drawable.crossing_left);
-                navigation.setAlpha((float)1.0);
+            }else if(value.equals("one")){
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setImageResource(R.drawable.one);
                 navigation.startAnimation(navAnimation);
-            }else if(value.equals("cs")){
-                navigation.setImageResource(R.drawable.crossing_straight);
-                navigation.setAlpha((float)1.0);
+            }else if(value.equals("two")){
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setImageResource(R.drawable.two);
                 navigation.startAnimation(navAnimation);
-            }else if(value.equals("")){
-                navigation.setImageResource(R.drawable.nav);
-                navigation.setAlpha((float)0.1);
+            }else if(value.equals("three")){
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setImageResource(R.drawable.three);
+                navigation.startAnimation(navAnimation);
+            }else if(value.equals("four")){
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setImageResource(R.drawable.four);
+                navigation.startAnimation(navAnimation);
+            }else if(value.equals("five")){
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setImageResource(R.drawable.five);
+                navigation.startAnimation(navAnimation);
+            }else if(value.equals("six")){
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setImageResource(R.drawable.six);
+                navigation.startAnimation(navAnimation);
+            }else if(value.equals("seven")){
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setImageResource(R.drawable.seven);
+                navigation.startAnimation(navAnimation);
+            }else if(value.equals("eight")){
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setImageResource(R.drawable.eight);
+                navigation.startAnimation(navAnimation);
+            }else if(value.equals("nine")){
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setImageResource(R.drawable.nine);
+                navigation.startAnimation(navAnimation);
+            }else if(value.equals("ten")){
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setImageResource(R.drawable.ten);
+                navigation.startAnimation(navAnimation);
+            }else if(value.equals("eleven")){
+                navigation.setVisibility(View.VISIBLE);
+                navigation.setImageResource(R.drawable.eleven);
+                navigation.startAnimation(navAnimation);
+            }else{
                 navigation.clearAnimation();
+                navigation.setVisibility(View.INVISIBLE);
             }
 
             previousNavigation = value;

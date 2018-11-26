@@ -21,5 +21,8 @@ public enum ViewMappings {
     SEAT_BELT_LIGHTS,
     BATTERY_LIGHTS,
     MILEAGE,
-    GEAR_SHIFT;
+    GEAR_SHIFT,
+    SPEED_LIMIT_SIGN,
+    SPEED_LIMIT_TEXT,
+    AUTOPILOT;
 }

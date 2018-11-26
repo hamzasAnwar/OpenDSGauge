@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setDefaultNavigationSettings() {
         navigation = findViewById(R.id.navigation);
+        navigation.setVisibility(View.INVISIBLE);
         viewMap.put(ViewMappings.NAVIGATION,navigation);
     }
 
