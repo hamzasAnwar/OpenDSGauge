@@ -50,6 +50,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private byte[] request = null;
     public Socket socket;
     private TextView speedDigital;
+    private TextView mileageDigital;
     private TextView gearDigital;
     private TextView currentGearMode;
     private ImageView handbrake;
@@ -105,6 +106,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.checkLights = (ImageView) viewMap.get(ViewMappings.CHECK_ENGINE_LIGHTS);
         this.cruiseControlLights = (ImageView) viewMap.get(ViewMappings.CRUISE_CONTROL_LIGHTS);
         this.navigation = (ImageView) viewMap.get(ViewMappings.NAVIGATION);
+        this.mileageDigital = (TextView) viewMap.get(ViewMappings.MILEAGE);
 
 
         this.node = new Node[viewMap.size()];
@@ -313,6 +315,13 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         if(values[15]!=null){
             applySeatBeltLights(values[15]);
         }
+        if(values[16]!=null){
+            applyMileageSettings(values[16]);
+        }
+    }
+
+    private void applyMileageSettings(String value) {
+        mileageDigital.setText(value);
     }
 
     private void applyFrostLights(String value) {
@@ -569,6 +578,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             node[13] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/batteryLights/text()", document, XPathConstants.NODE);
             node[14] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/tyrePressureLights/text()", document, XPathConstants.NODE);
             node[15] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/seatbeltLights/text()", document, XPathConstants.NODE);
+            node[16] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/mileage/text()", document, XPathConstants.NODE);
 
             for(int i=0;i<node.length;i++){
                 if(node[i]!=null){

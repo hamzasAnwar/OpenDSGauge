@@ -161,6 +161,7 @@
         app:sv_unitTextColor="#fff" />
 
 
+
     <ImageView
         android:id="@+id/battery"
         android:layout_width="50dp"
@@ -240,5 +241,25 @@
         android:layout_toLeftOf="@id/left"
         android:layout_marginTop="550dp"
         android:src="@drawable/tyrepressurelow" />
+    <TextView
+        android:id="@+id/trip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#f5f5f5"
+        android:layout_marginTop="295dp"
+        android:text="Trip"
+        android:layout_toLeftOf="@id/mileageDigital"
+        android:textSize="12dp"
+        />
+
+    <TextView
+        android:id="@+id/mileageDigital"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="315dp"
+        android:textColor="#f5f5f5"
+        android:textSize="20dp"
+        />
 
 </RelativeLayout>

@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static String TAG = Tags.MAIN_ACTIVITY;
     private TcpClient tcpClient;
     private TextView speedDigital;
+    private TextView mileageDigital;
     private TextView gearDigital;
     private TextView currentGearMode;
     private ImageView handbrake;
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         setDefaultGearSettings();
         setDefaultAccelerometerSettings();
         setDefaultSpeedometerSettings();
+        setDefaultMileageSettings();
         setDefaultHandbrakeSettings();
         setDefaultTurnSignalSettings();
         setScreenAlwaysOnSetting();
@@ -209,6 +211,12 @@ public class MainActivity extends AppCompatActivity {
         viewMap.put(ViewMappings.SPEEDOMETER_DIGITAL,speedDigital);
     }
 
+    private void setDefaultMileageSettings(){
+        mileageDigital = findViewById(R.id.mileageDigital);
+        mileageDigital.setTypeface(Typeface.createFromAsset(getAssets(), "digital-counter-7.regular.ttf"));
+
+        viewMap.put(ViewMappings.MILEAGE,mileageDigital);
+    }
 
     private void setDefaultAccelerometerSettings() {
         accelerometer = findViewById(R.id.accelerometer);

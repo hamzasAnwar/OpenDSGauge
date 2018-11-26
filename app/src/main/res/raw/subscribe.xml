@@ -3,6 +3,7 @@
     <Event Name="Unsubscribe">/root/thisVehicle</Event>
     <Event Name="Subscribe">/root/thisVehicle/interior/navigationImage</Event>
     <Event Name="Subscribe">/root/thisVehicle/physicalAttributes/Properties/speed</Event>
+    <Event Name="Subscribe">/root/thisVehicle/physicalAttributes/Properties/mileage</Event>
     <Event Name="Subscribe">/root/thisVehicle/exterior/engineCompartment/engine/Properties/actualRpm</Event>
     <Event Name="Subscribe">/root/thisVehicle/exterior/fueling/fuelType/tank/Properties/actualAmount</Event>
     <Event Name="Subscribe">/root/thisVehicle/exterior/gearUnit/Properties/currentGear</Event>
