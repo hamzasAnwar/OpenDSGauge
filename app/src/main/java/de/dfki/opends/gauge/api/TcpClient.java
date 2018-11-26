@@ -476,13 +476,13 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     }
 
     private void applyRpmSettings(String value) {
-        Float rpm = Float.valueOf(value);
+        int rpm = Float.valueOf(value).intValue();
         //Normalize RPM
         rpm-=560;
         if(rpm==140){
-            rpm=(float)5;
+            rpm=5;
         }
-        accelerometer.setSpeedAt(rpm);
+        accelerometer.setSpeedAt((float)rpm);
     }
 
     private void applyHandbrakeSettings(String value) {
