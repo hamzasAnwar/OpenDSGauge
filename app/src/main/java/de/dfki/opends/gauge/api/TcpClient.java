@@ -326,12 +326,13 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
     private void applyGearShiftSettings(String value) {
         if(value.equals("UP")){
-            gearShift.setAlpha((float)1);
+            gearShift.setVisibility(View.VISIBLE);
             gearShift.setImageResource(R.drawable.shiftup);
         }else if(value.equals("DOWN")){
-            gearShift.setAlpha((float)1);
+            gearShift.setVisibility(View.VISIBLE);
             gearShift.setImageResource(R.drawable.shiftdown);
         }else{
+            gearShift.setVisibility(View.INVISIBLE);
             gearShift.setAlpha((float)0);
         }
     }

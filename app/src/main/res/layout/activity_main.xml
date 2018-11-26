@@ -105,6 +105,7 @@
         android:layout_height="50dp"
         android:layout_toLeftOf="@id/digitalGear"
         android:layout_alignTop="@id/digitalGear"
+        android:visibility="invisible"
         android:src="@drawable/shiftup" />
 
 
