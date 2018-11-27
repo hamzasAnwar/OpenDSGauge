@@ -68,6 +68,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private ImageView cruiseControlLights;
     private ImageView batteryLights;
     private ImageView checkLights;
+    private ImageView autopilotSign;
     private ImageView gearShift;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
@@ -79,12 +80,14 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private String previousSignal = "OFF";
     private String previousNavigation = "";
     private String previousBeam = "";
+    private String previousDrivingMode="";
     private String[] values;
     private Node[] node;
     private Animation turnAnimation;
     private Animation navAnimation;
     private Animation fuelAnimation;
     private Animation seatbeltAnimation;
+    private Animation takeControlAnimation;
 
     public TcpClient(String address, int port, InputStream is, Map<ViewMappings,View> viewMap) {
         this.dstAddress = address;
@@ -113,7 +116,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.gearShift = (ImageView) viewMap.get(ViewMappings.GEAR_SHIFT);
         this.speedLimitSign = (ImageView) viewMap.get(ViewMappings.SPEED_LIMIT_SIGN);
         this.speedLimitText = (TextView) viewMap.get(ViewMappings.SPEED_LIMIT_TEXT);
-
+        this.autopilotSign = (ImageView)viewMap.get(ViewMappings.AUTOPILOT);
         this.node = new Node[viewMap.size()];
         this.values = new String[viewMap.size()];
         this.xPath = XPathFactory.newInstance().newXPath();
@@ -122,6 +125,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.setupNavigationAnimation();
         this.setupFuelAnimation();
         this.setupSeatbeltAnimation();
+        this.setupTakeControlAnimation();
 
         try {
             builder = factory.newDocumentBuilder();
@@ -129,6 +133,13 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             e.printStackTrace();
         }
 
+    }
+
+    private Animation setupTakeControlAnimation() {
+        if(takeControlAnimation==null){
+            takeControlAnimation = createNewDefaultAnimation();
+        }
+        return takeControlAnimation;
     }
 
     private Animation createNewDefaultAnimation(){
@@ -226,18 +237,14 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
                         publishProgress(getContent(loadXMLFromString(messageValue)));
                     }
 
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
-        } catch (UnknownHostException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Log.d(TAG, "UnknownHostException: " + e.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.d(TAG, "IOException: " + e.toString());
-
         } finally {
             if (socket != null) {
                 try {
@@ -328,10 +335,39 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         if(values[18]!=null){
             applySpeedLimitSettings(values[18]);
         }
+        if(values[19]!=null){
+            applyAutopilotSettings(values[19]);
+        }
+    }
+
+    private void applyAutopilotSettings(String value) {
+
+        if(!previousDrivingMode.equals(value)){
+
+            if(value.equals("ON")){
+                autopilotSign.clearAnimation();
+                autopilotSign.setVisibility(View.VISIBLE);
+                autopilotSign.setImageResource(R.drawable.autopilot);
+            }else if(value.equals("CONTROL")){
+                autopilotSign.setVisibility(View.VISIBLE);
+                autopilotSign.setImageResource(R.drawable.transfercontrol);
+                autopilotSign.setAnimation(takeControlAnimation);
+            }else if(value.equals("OFF")){
+                autopilotSign.clearAnimation();
+                autopilotSign.setVisibility(View.VISIBLE);
+                autopilotSign.setImageResource(R.drawable.autopilotoff);
+            }else{
+                autopilotSign.setVisibility(View.INVISIBLE);
+                autopilotSign.clearAnimation();
+            }
+
+            previousDrivingMode = value;
+        }
+
+
     }
 
     private void applySpeedLimitSettings(String value) {
-        Log.d(TAG,value);
         if(!speedLimitText.equals("")){
             speedLimitText.setText(value);
             speedLimitSign.setVisibility(View.VISIBLE);
@@ -455,8 +491,6 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         }else{
             fuelLights.setImageResource(R.drawable.fuel);
         }
-
-
 
     }
 
@@ -651,6 +685,7 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             node[16] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/physicalAttributes/Properties/mileage/text()", document, XPathConstants.NODE);
             node[17] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/gearUnit/Properties/shift/text()", document, XPathConstants.NODE);
             node[18] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/speedLimit/text()", document, XPathConstants.NODE);
+            node[19] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/autoPilot/text()", document, XPathConstants.NODE);
 
             for(int i=0;i<node.length;i++){
                 if(node[i]!=null){

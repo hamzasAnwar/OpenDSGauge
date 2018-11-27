@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView navigation;
     private ImageView gearShift;
     private ImageView speedLimitSign;
+    private ImageView autoPilotSign;
     private TextView speedLimitText;
 
 
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         //configure default settings
         setDefaultGearSettings();
+        setDefaultAutopilotSettings();
         setDefaultSpeedLimitSettings();
         setDefaultAccelerometerSettings();
         setDefaultSpeedometerSettings();
@@ -83,6 +85,12 @@ public class MainActivity extends AppCompatActivity {
         setDefaultTyrePressureLights();
         initialzeTcpClient();
 
+    }
+
+    private void setDefaultAutopilotSettings() {
+        autoPilotSign = findViewById(R.id.autopilotSign);
+        autoPilotSign.setVisibility(View.INVISIBLE);
+        viewMap.put(ViewMappings.AUTOPILOT,autoPilotSign);
     }
 
     private void setDefaultSpeedLimitSettings() {
