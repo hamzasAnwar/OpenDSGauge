@@ -69,6 +69,8 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
     private ImageView batteryLights;
     private ImageView checkLights;
     private ImageView autopilotSign;
+    private ImageView fogBeam;
+    private ImageView rearFogBeam;
     private ImageView gearShift;
     private ImageSpeedometer speedometer;
     private ImageSpeedometer accelerometer;
@@ -117,6 +119,8 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         this.speedLimitSign = (ImageView) viewMap.get(ViewMappings.SPEED_LIMIT_SIGN);
         this.speedLimitText = (TextView) viewMap.get(ViewMappings.SPEED_LIMIT_TEXT);
         this.autopilotSign = (ImageView)viewMap.get(ViewMappings.AUTOPILOT);
+        this.fogBeam = (ImageView)viewMap.get(ViewMappings.FOG_LIGHTS);
+        this.rearFogBeam = (ImageView)viewMap.get(ViewMappings.REAR_FOG_LIGHTS);
         this.node = new Node[viewMap.size()];
         this.values = new String[viewMap.size()];
         this.xPath = XPathFactory.newInstance().newXPath();
@@ -183,7 +187,6 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                navigation.setVisibility(View.INVISIBLE);
                 navigation.clearAnimation();
             }
 
@@ -338,6 +341,29 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
         if(values[19]!=null){
             applyAutopilotSettings(values[19]);
         }
+        if(values[20]!=null){
+            applyFogBeamSettings(values[20]);
+        }
+        if(values[21]!=null){
+            applyRearFogBeamSettings(values[21]);
+        }
+
+    }
+
+    private void applyRearFogBeamSettings(String value) {
+        if(value.equals("true")){
+            fogBeam.setAlpha((float)1);
+        }else{
+            fogBeam.setAlpha((float)0.1);
+        }
+    }
+
+    private void applyFogBeamSettings(String value) {
+        if(value.equals("true")){
+            rearFogBeam.setAlpha((float)1);
+        }else{
+            rearFogBeam.setAlpha((float)0.1);
+        }
     }
 
     private void applyAutopilotSettings(String value) {
@@ -462,12 +488,6 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
                 headlights.setAlpha((float)1);
             }else if(value.equals("LowBeam")){
                 headlights.setImageResource(R.drawable.lowbeam);
-                headlights.setAlpha((float) 1);
-            }else if(value.equals("RearFogBeam")){
-                headlights.setImageResource(R.drawable.rearfogbeam);
-                headlights.setAlpha((float) 1);
-            }else if(value.equals("FogBeam")){
-                headlights.setImageResource(R.drawable.fogbeam);
                 headlights.setAlpha((float) 1);
             }else{
                 headlights.setImageResource(R.drawable.lowbeam);
@@ -686,6 +706,8 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
             node[17] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/exterior/gearUnit/Properties/shift/text()", document, XPathConstants.NODE);
             node[18] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/speedLimit/text()", document, XPathConstants.NODE);
             node[19] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/autoPilot/text()", document, XPathConstants.NODE);
+            node[20] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/fogBeam/text()", document, XPathConstants.NODE);
+            node[21] = (Node) xPath.evaluate("/Message/Event/root/thisVehicle/interior/cockpit/dashboard/rearfogBeam/text()", document, XPathConstants.NODE);
 
             for(int i=0;i<node.length;i++){
                 if(node[i]!=null){

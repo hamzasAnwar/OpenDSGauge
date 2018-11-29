@@ -24,5 +24,7 @@ public enum ViewMappings {
     GEAR_SHIFT,
     SPEED_LIMIT_SIGN,
     SPEED_LIMIT_TEXT,
-    AUTOPILOT;
+    AUTOPILOT,
+    FOG_LIGHTS,
+    REAR_FOG_LIGHTS;
 }

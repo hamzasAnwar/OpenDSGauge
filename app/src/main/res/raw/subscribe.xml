@@ -19,6 +19,8 @@
     <Event Name="Subscribe">/root/thisVehicle/interior/cockpit/dashboard/batteryLights</Event>
     <Event Name="Subscribe">/root/thisVehicle/interior/cockpit/dashboard/speedLimit</Event>
     <Event Name="Subscribe">/root/thisVehicle/interior/cockpit/dashboard/autoPilot</Event>
+    <Event Name="Subscribe">/root/thisVehicle/interior/cockpit/dashboard/fogBeam</Event>
+    <Event Name="Subscribe">/root/thisVehicle/interior/cockpit/dashboard/rearfogBeam</Event>
     <Event Name="Subscribe">/root/thisVehicle/interior/cockpit/dashboard/tyrePressureLights</Event>
     <Event Name="Subscribe">/root/thisVehicle/interior/cockpit/dashboard/seatbeltLights</Event>
 

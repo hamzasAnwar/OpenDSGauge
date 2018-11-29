@@ -29,7 +29,7 @@
 
     <ImageView
         android:id="@+id/speedLimitSign"
-        android:layout_marginLeft="525dp"
+        android:layout_centerHorizontal="true"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginTop="70dp"
@@ -50,7 +50,7 @@
         android:id="@+id/speedLimitText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="545dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="90dp"
         android:textSize="25dp"
         android:textColor="#000000"
@@ -157,6 +157,24 @@
         android:alpha="0.1"
         android:layout_marginTop="550dp"
         android:src="@drawable/lowbeam" />
+
+    <ImageView
+        android:id="@+id/rearfogbeam"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_toLeftOf="@id/frostwarning"
+        android:alpha="0.1"
+        android:layout_marginTop="600dp"
+        android:src="@drawable/rearfogbeam" />
+
+    <ImageView
+        android:id="@+id/fogbeam"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@id/frostwarning"
+        android:alpha="0.1"
+        android:layout_marginTop="600dp"
+        android:src="@drawable/fogbeam" />
 
     <ImageView
         android:id="@+id/handbrake"

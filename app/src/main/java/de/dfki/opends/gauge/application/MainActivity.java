@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView gearShift;
     private ImageView speedLimitSign;
     private ImageView autoPilotSign;
+    private ImageView foglights;
+    private ImageView rearfoglights;
     private TextView speedLimitText;
 
 
@@ -76,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         setDefaultNavigationSettings();
         setDefaultFuelSettings();
         setDefaultHeadlights();
+        setDefaultFoglights();
+        setDefaultRearFoglights();
         setDefaultBatteryLights();
         setDefaultSeatbeltLights();
         setDefaultCheckEngineLights();
@@ -85,6 +89,17 @@ public class MainActivity extends AppCompatActivity {
         setDefaultTyrePressureLights();
         initialzeTcpClient();
 
+    }
+
+    private void setDefaultFoglights() {
+        foglights = findViewById(R.id.fogbeam);
+        viewMap.put(ViewMappings.FOG_LIGHTS,foglights);
+
+    }
+
+    private void setDefaultRearFoglights() {
+        rearfoglights = findViewById(R.id.rearfogbeam);
+        viewMap.put(ViewMappings.REAR_FOG_LIGHTS,rearfoglights);
     }
 
     private void setDefaultAutopilotSettings() {
@@ -166,8 +181,8 @@ public class MainActivity extends AppCompatActivity {
     private void setDefaultFuelSettings() {
         fuelmeter = findViewById(R.id.fuelgauge);
         fuelmeter.setMinMaxSpeed(0,60);
-        fuelmeter.setStartDegree(180+15);
-        fuelmeter.setEndDegree(360-15);
+        fuelmeter.setStartDegree(180+22);
+        fuelmeter.setEndDegree(360-22);
         fuelmeter.setSpeedTextSize(0);
         fuelmeter.setUnitTextSize(0);
         fuelmeter.setWithTremble(false);
@@ -208,7 +223,6 @@ public class MainActivity extends AppCompatActivity {
         if(rpmRight){
             setRPMRight();
         }
-
         try {
             tcpClient = new TcpClient(ip, port, this.getResources().openRawResource(R.raw.subscribe), viewMap);
             tcpClient.execute();
