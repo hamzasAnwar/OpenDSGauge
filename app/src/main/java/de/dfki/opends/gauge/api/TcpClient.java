@@ -432,9 +432,14 @@ public class TcpClient extends AsyncTask<Void, String, Void> {
 
     private void applyCruiseControlLights(String value) {
 
-        if(value.equals("true")){
+        if(value.equals("CRUISE")){
+            cruiseControlLights.setImageResource(R.drawable.cruisecontrol);
+            cruiseControlLights.setAlpha((float)1);
+        }else if(value.equals("LIMIT")){
+            cruiseControlLights.setImageResource(R.drawable.speedlimiter);
             cruiseControlLights.setAlpha((float)1);
         }else{
+            cruiseControlLights.setImageResource(R.drawable.cruisecontrol);
             cruiseControlLights.setAlpha((float)0.1);
         }
     }
