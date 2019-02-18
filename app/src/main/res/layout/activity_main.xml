@@ -248,20 +248,20 @@
         android:layout_centerHorizontal="true"
         android:alpha="0.1"
         android:layout_marginTop="550dp"
-        android:layout_toRightOf="@id/cruisecontrol"
+        android:layout_toRightOf="@id/oilpressure"
         android:src="@drawable/checkengine" />
 
 
+
     <ImageView
-        android:id="@+id/cruisecontrol"
+        android:id="@+id/oilpressure"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:alpha="0.1"
         android:layout_marginTop="550dp"
         android:layout_toRightOf="@id/right"
-        android:src="@drawable/cruisecontrol" />
-
+        android:src="@drawable/oilpressurelow" />
 
 
     <ImageView
@@ -273,21 +273,15 @@
         android:layout_marginTop="600dp"
         android:src="@drawable/frostwarning" />
 
-
-
-
-
     <ImageView
-        android:id="@+id/oilpressure"
+        android:id="@+id/cruisecontrol"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:alpha="0.1"
         android:layout_marginTop="550dp"
-
         android:layout_toLeftOf="@id/seatbelt"
-        android:src="@drawable/oilpressurelow" />
-
+        android:src="@drawable/cruisecontrol" />
 
     <ImageView
         android:id="@+id/seatbelt"
