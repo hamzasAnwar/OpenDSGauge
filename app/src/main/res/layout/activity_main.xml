@@ -128,6 +128,14 @@
         android:textSize="60sp" />
 
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/gearMode"
+        android:layout_above="@id/digitalGear"
+        android:alpha="0.2"
+        android:src="@drawable/opends"/>
+
     <TextView
         android:id="@+id/kmh"
         android:layout_width="wrap_content"

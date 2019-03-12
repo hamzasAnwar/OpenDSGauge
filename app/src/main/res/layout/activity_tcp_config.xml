@@ -70,6 +70,14 @@
             android:layout_height="45dp"
             android:text="@string/rpm_align_right"
             android:layout_marginStart="20dp" />
+
+        <ImageView
+            android:paddingLeft="200dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/opends"
+            android:scaleType="fitXY"
+            android:layout_gravity="center_horizontal"/>
     </LinearLayout>
 
 </LinearLayout>
